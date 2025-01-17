@@ -62,6 +62,7 @@ bin/windows/pirate-game-jam-16*
 bin/web/pirate-game-jam-16*
 pirate-software-game-jam-16/bin/web/libpirate-game-jam-16*
 pirate-software-game-jam-16/bin/windows/libpirate-game-jam-16*
+pirate-software-game-jam-16/bin/windows/~libpirate-game-jam-16*
 
 # Ignore Exports
 exports/*

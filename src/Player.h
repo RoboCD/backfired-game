@@ -18,6 +18,9 @@ public:
 	void set_speed(float p_speed);
 	float get_speed() const;
 
+	void set_gravity(float p_gravity);
+	float get_gravity() const;
+
 	virtual void _physics_process(double p_delta) override;
 
 	void _process(double delta) override;
@@ -29,6 +32,8 @@ private:
 	double time_passed;
 
 	float speed = 100.0;
+
+	double gravity;
 
 	// AnimatedSprite2D *botSprite2d;
 	// Sprite2D *botSprite2d;
