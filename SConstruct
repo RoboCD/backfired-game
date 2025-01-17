@@ -5,8 +5,8 @@ import sys
 from methods import print_error
 
 
-libname = "EXTENSION-NAME"
-projectdir = "demo"
+libname = "pirate-game-jam-16"
+projectdir = "pirate-software-game-jam-16"
 
 localEnv = Environment(tools=["default"], PLATFORM="")
 
