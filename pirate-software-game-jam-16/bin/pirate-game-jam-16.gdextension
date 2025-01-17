@@ -1,6 +1,6 @@
 [configuration]
 
-entry_symbol = "pirate-game-jam-16"
+entry_symbol = "pirate_game_jam_library_init"
 compatibility_minimum = "4.3"
 
 [libraries]
@@ -23,7 +23,7 @@ android.debug.x86_64 = "res://bin/android/libpirate-game-jam-16.android.template
 android.release.x86_64 = "res://bin/android/libpirate-game-jam-16.android.template_release.x86_64.so"
 android.debug.arm64 = "res://bin/android/libpirate-game-jam-16.android.template_debug.arm64.so"
 android.release.arm64 = "res://bin/android/libpirate-game-jam-16.android.template_release.arm64.so"
-web.debug.threads.wasm32 = "res://bin/web/libpuzzle_push_box_game.web.template_debug.wasm32.wasm"
-web.release.threads.wasm32 = "res://bin/web/libpuzzle_push_box_game.web.template_release.wasm32.wasm"
-web.debug.wasm32 = "res://bin/web/libpuzzle_push_box_game.web.template_debug.wasm32.nothreads.wasm"
-web.release.wasm32 = "res://bin/web/libpuzzle_push_box_game.web.template_release.wasm32.nothreads.wasm"
+web.debug.threads.wasm32 = "res://bin/web/libpirate-game-jam-16.web.template_debug.wasm32.wasm"
+web.release.threads.wasm32 = "res://bin/web/libpirate-game-jam-16.web.template_release.wasm32.wasm"
+web.debug.wasm32 = "res://bin/web/libpirate-game-jam-16.web.template_debug.wasm32.nothreads.wasm"
+web.release.wasm32 = "res://bin/web/libpirate-game-jam-16.web.template_release.wasm32.nothreads.wasm"
