@@ -6,6 +6,7 @@
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/collision_shape2d.hpp>
 #include <godot_cpp/classes/sprite2d.hpp>
+#include <godot_cpp/classes/texture_rect.hpp>
 
 namespace godot {
 
@@ -21,6 +22,9 @@ public:
 	void set_gravity(float p_gravity);
 	float get_gravity() const;
 
+	void set_texture(const Ref<Texture2D> &p_texture);
+	Ref<Texture2D> get_texture() const;
+
 	virtual void _physics_process(double p_delta) override;
 
 	void _process(double delta) override;
@@ -31,12 +35,13 @@ protected:
 private:
 	double time_passed;
 
-	float speed = 100.0;
+	float speed = 600.0;
 
 	double gravity;
 
 	// AnimatedSprite2D *botSprite2d;
-	// Sprite2D *botSprite2d;
+	Sprite2D *playerSprite2d = nullptr;
+	Ref<Texture2D> texture;
     // CollisionShape2D *botCollisionShape2d;
 
 };

@@ -8,10 +8,7 @@ size = Vector2(738, 76.5)
 [node name="Main" type="Main"]
 
 [node name="Player" parent="." instance=ExtResource("1_6we2n")]
-speed = 600.0
-gravity = 980.0
 position = Vector2(394, 448)
-floor_stop_on_slope = false
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 

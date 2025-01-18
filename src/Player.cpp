@@ -18,6 +18,10 @@ void Player::_bind_methods() {
 
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "gravity"), "set_gravity", "get_gravity");
 
+	ClassDB::bind_method(D_METHOD("set_texture", "texture"), &Player::set_texture);
+	ClassDB::bind_method(D_METHOD("get_texture"), &Player::get_texture);
+
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "texture", PROPERTY_HINT_RESOURCE_TYPE, "Texture2D"), "set_texture", "get_texture");
 }
 
 Player::Player() {
@@ -25,15 +29,17 @@ Player::Player() {
 	time_passed = 0.0;
 	// botCollisionShape2d = memnew(CollisionShape2D);
 	// botSprite2d = memnew(AnimatedSprite2D);
-	// botSprite2d = memnew(Sprite2D);
+	playerSprite2d = memnew(Sprite2D);
 	// add_child(botCollisionShape2d);
-	// add_child(botSprite2d);
-
+	add_child(playerSprite2d);
+	playerSprite2d->set_process(true);
 	// botSprite2d->set_sprite_frames()
-	// gravity = ProjectSettings::get_singleton()->get_setting("physics/2d/default_gravity");
+	gravity = ProjectSettings::get_singleton()->get_setting("physics/2d/default_gravity");
 	// gravity = gravity /2;
-	gravity = 20;
+	// gravity = 20;
 	set_floor_stop_on_slope_enabled(false);
+	playerSprite2d->set_texture(texture);
+	// playerSprite2d->set_visible(true);
 }
 
 Player::~Player() {
@@ -55,6 +61,17 @@ void Player::set_gravity(float p_gravity){
 float Player::get_gravity() const{
 	return gravity;
 }
+
+void Player::set_texture(const Ref<Texture2D> &p_texture){
+	texture = p_texture;
+	playerSprite2d->set_texture(p_texture);
+}
+
+Ref<Texture2D> Player::get_texture() const{
+	// return texture;
+	return playerSprite2d->get_texture();
+}
+
 
 void Player::_process(double delta) {
 	time_passed += delta;
