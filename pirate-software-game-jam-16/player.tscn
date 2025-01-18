@@ -2,14 +2,19 @@
 
 [ext_resource type="Texture2D" uid="uid://chben8hmmkjmi" path="res://Backfire_Gun.png" id="1_qku4q"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_woms0"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lvxis"]
+radius = 5.5
 
 [node name="Player" type="Player"]
 position = Vector2(100, 100)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
 texture = ExtResource("1_qku4q")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(3, 3)
-shape = SubResource("CircleShape2D_woms0")
+rotation = 1.5708
+scale = Vector2(2, 2)
+shape = SubResource("CapsuleShape2D_lvxis")

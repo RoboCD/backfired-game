@@ -33,6 +33,7 @@ Player::Player() {
 	// gravity = ProjectSettings::get_singleton()->get_setting("physics/2d/default_gravity");
 	// gravity = gravity /2;
 	gravity = 20;
+	set_floor_stop_on_slope_enabled(false);
 }
 
 Player::~Player() {
@@ -67,48 +68,34 @@ void Player::_physics_process(double p_delta){
 	if (Engine::get_singleton()->is_editor_hint()) return; // Early return if we are in editor
 	Input *input = Input::get_singleton();
 
-	Vector2 velocity;
-	double velocity_input{0};
-    // if (input->is_action_pressed("ui_up")) {
-	// 	velocity.y -= 1.0;
-    // } else if (input->is_action_pressed("ui_down")) {
-	// 	velocity.y += 1.0;
-	// } else if (input->is_action_pressed("ui_left")) {
-	// 	velocity.x -= 1.0;
-	// } else if (input->is_action_pressed("ui_right")) {
-	// 	velocity.x += 1.0;
-	// }
-	// velocity.y = (gravity * p_delta);
+	Vector2 velocity = get_velocity();
+
 	double rotation = get_rotation_degrees();
 	bool shoot{false};
 	if(input->is_action_just_pressed("shoot")){
-		// velocity_input = -1.0;
 		shoot = true;
 	}
 
 	if (input->is_action_pressed("ui_left")) {
-		rotation += 5.0;
-	} else if (input->is_action_pressed("ui_right")) {
 		rotation -= 5.0;
+	} else if (input->is_action_pressed("ui_right")) {
+		rotation += 5.0;
 	}
 	double rotation_rad = UtilityFunctions::deg_to_rad(rotation);
 
 	if (shoot){
 		velocity.x = UtilityFunctions::cos(rotation_rad) * -1 * speed;
-		// if (velocity_input < 0.0){
-
 		velocity.y = UtilityFunctions::sin(rotation_rad) * -1 * speed;
 	}
 	else {
-		velocity.x = 0;
-		velocity.y = 0;
-	}
-
-	if (!is_on_floor()){
 		velocity.y += (gravity * p_delta);
 	}
+
+	if (is_on_floor()){
+		velocity.x = 0;
+	}
+
 	UtilityFunctions::print("Velocity: " + String(velocity) );
-	// }
 
 	set_rotation_degrees(rotation);
 	set_velocity(velocity);

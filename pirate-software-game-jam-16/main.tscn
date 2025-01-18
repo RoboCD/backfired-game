@@ -9,8 +9,11 @@ size = Vector2(738, 76.5)
 
 [node name="Player" parent="." instance=ExtResource("1_6we2n")]
 speed = 600.0
-gravity = 6500.0
+gravity = 980.0
 position = Vector2(394, 448)
+floor_stop_on_slope = false
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(396, 611)
@@ -24,3 +27,15 @@ offset_top = -38.0
 offset_right = 369.0
 offset_bottom = 38.0
 color = Color(0.0179132, 0.189976, 0.311471, 1)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(68, 542)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D2"]
+position = Vector2(-26, 25)
+polygon = PackedVector2Array(-13, -14, -13, -109, 141, 6, -14, 5)
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D2"]
+position = Vector2(234, -42)
+color = Color(0.0196078, 0.188235, 0.309804, 1)
+polygon = PackedVector2Array(-274, 71, -272, -42, -119, 72)
