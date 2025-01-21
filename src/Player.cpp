@@ -89,6 +89,11 @@ void Player::_physics_process(double p_delta){
 
 	double rotation = get_rotation_degrees();
 	bool shoot{false};
+
+	if (is_on_floor()){
+		velocity.x = 0;
+	}
+
 	if(input->is_action_just_pressed("shoot")){
 		shoot = true;
 	}
@@ -108,11 +113,7 @@ void Player::_physics_process(double p_delta){
 		velocity.y += (gravity * p_delta);
 	}
 
-	if (is_on_floor()){
-		velocity.x = 0;
-	}
-
-	UtilityFunctions::print("Velocity: " + String(velocity) );
+	// UtilityFunctions::print("Velocity: " + String(velocity) );
 
 	set_rotation_degrees(rotation);
 	set_velocity(velocity);

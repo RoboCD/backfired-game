@@ -1,38 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://b0ficdbwhm34b"]
+[gd_scene load_steps=2 format=3 uid="uid://b0ficdbwhm34b"]
 
-[ext_resource type="PackedScene" uid="uid://bnqsnvkq5q7ct" path="res://player.tscn" id="1_6we2n"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wh6ey"]
-size = Vector2(738, 76.5)
+[ext_resource type="PackedScene" uid="uid://c5x7wie07uyj5" path="res://main_menu.tscn" id="1_ems2q"]
 
 [node name="Main" type="Main"]
 
-[node name="Player" parent="." instance=ExtResource("1_6we2n")]
-position = Vector2(394, 448)
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(396, 611)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-shape = SubResource("RectangleShape2D_wh6ey")
-
-[node name="ColorRect" type="ColorRect" parent="StaticBody2D"]
-offset_left = -369.0
-offset_top = -38.0
-offset_right = 369.0
-offset_bottom = 38.0
-color = Color(0.0179132, 0.189976, 0.311471, 1)
-
-[node name="StaticBody2D2" type="StaticBody2D" parent="."]
-position = Vector2(68, 542)
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D2"]
-position = Vector2(-26, 25)
-polygon = PackedVector2Array(-13, -14, -13, -109, 141, 6, -14, 5)
-
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D2"]
-position = Vector2(234, -42)
-color = Color(0.0196078, 0.188235, 0.309804, 1)
-polygon = PackedVector2Array(-274, 71, -272, -42, -119, 72)
+[node name="MainMenu" parent="." instance=ExtResource("1_ems2q")]

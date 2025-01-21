@@ -6,6 +6,7 @@
 
 #include "Main.h"
 #include "Player.h"
+#include "Main_Menu.h"
 
 using namespace godot;
 
@@ -16,6 +17,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level)
 	}
 	GDREGISTER_CLASS(Main);
 	GDREGISTER_CLASS(Player);
+	GDREGISTER_CLASS(MainMenu);
 }
 
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {
