@@ -13,6 +13,7 @@ follow_viewport_enabled = true
 position = Vector2(394, 448)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+enabled = false
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(396, 611)

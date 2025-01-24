@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhfoqis0jx65f"]
+
+[ext_resource type="Texture2D" uid="uid://dru5cd8c2i7ty" path="res://Backfire_Beam.png" id="1_kc8m2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c3kyv"]
+radius = 5.0
+
+[node name="Bullet" type="Bullet"]
+physics_interpolation_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_kc8m2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_c3kyv")

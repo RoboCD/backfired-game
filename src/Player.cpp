@@ -4,6 +4,12 @@
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/project_settings.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
+#include <godot_cpp/classes/scene_tree.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
+#include <godot_cpp/classes/marker2d.hpp>
+
+#include "Bullet.h"
 
 using namespace godot;
 
@@ -40,6 +46,8 @@ Player::Player() {
 	set_floor_stop_on_slope_enabled(false);
 	playerSprite2d->set_texture(texture);
 	// playerSprite2d->set_visible(true);
+
+	bulletScene = ResourceLoader::get_singleton()->load("res://bullet.tscn");
 }
 
 Player::~Player() {
@@ -87,7 +95,7 @@ void Player::_physics_process(double p_delta){
 
 	Vector2 velocity = get_velocity();
 
-	double rotation = get_rotation_degrees();
+	double rotation = get_global_rotation_degrees();
 	bool shoot{false};
 
 	if (is_on_floor()){
@@ -96,6 +104,14 @@ void Player::_physics_process(double p_delta){
 
 	if(input->is_action_just_pressed("shoot")){
 		shoot = true;
+		// shoot_beam();
+		// Spawn bullet
+		// Bullet * bullet = memnew(Bullet);
+		// add_child(bullet);
+
+		// // bullet->
+		// SceneTree* scene_tree = get_tree();
+		// Ref<PackedScene> bulletScene = ResourceLoader::get_singleton()->load("res://level-1.tscn");
 	}
 
 	if (input->is_action_pressed("ui_left")) {
@@ -108,15 +124,54 @@ void Player::_physics_process(double p_delta){
 	if (shoot){
 		velocity.x = UtilityFunctions::cos(rotation_rad) * -1 * speed;
 		velocity.y = UtilityFunctions::sin(rotation_rad) * -1 * speed;
+		// velocity.x = -1*speed;
+		// velocity = velocity.x.rotated(rotation_rad);
 	}
 	else {
 		velocity.y += (gravity * p_delta);
 	}
 
 	// UtilityFunctions::print("Velocity: " + String(velocity) );
-
-	set_rotation_degrees(rotation);
+	// UtilityFunctions::print("Rotation: ", rotation);
+    // Marker2D * muzzle = get_node<Marker2D>("Marker2D");
+	// UtilityFunctions::print("Muzzle position: ", String(muzzle->get_position()), "Rotation: ", muzzle->get_rotation_degrees());
+	set_global_rotation_degrees(rotation);
 	set_velocity(velocity);
-
+	if (shoot){
+		shoot_beam();
+	}
 	move_and_slide();
+}
+
+void Player::shoot_beam(){
+	// C#
+	// var b = (Bullet)_bullet.Instantiate();
+	// b.Start(GetNode<Node2D>("Muzzle").GlobalPosition, Rotation);
+	// GetTree().Root.AddChild(b);
+
+	// Ref<PackedScene> bullet_instance =
+	Node* bullet_instance = bulletScene->instantiate();
+	SceneTree* scene_tree = get_tree();
+	Bullet* bulletNode = bullet_instance->get_node<Bullet>(".");
+	// ("Bullet");
+	Marker2D* muzzle = get_node<Marker2D>("Marker2D");
+	Vector2 muzzlePosition = muzzle->get_global_position();
+	double muzzleRotation = muzzle->get_global_rotation_degrees();
+	UtilityFunctions::print("Muzzle position: ", String(muzzlePosition), "Rotation: ", muzzleRotation);
+
+	// bulletNode->set_global_position(muzzlePosition);
+	scene_tree->get_current_scene()->add_child(bullet_instance);
+	// bullet_instance->set_physics_process(false);
+	// bulletNode->set_position(muzzlePosition);
+	// bulletNode->call_deferred("set_position",muzzlePosition);
+
+	// scene_tree->get_current_scene()->get_child(2)->get_node<Bullet>("Bullet")->start(muzzlePosition, muzzleRotation);
+	// if (oneShot){
+	bulletNode->start(muzzlePosition, muzzleRotation);
+	// bullet_instance->set_physics_process(true);
+	// 	oneShot = false;
+	// }
+    // bulletScene.Bullet.start();
+	// start_button = get_node<Button>("StartButton");
+
 }

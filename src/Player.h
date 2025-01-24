@@ -7,6 +7,7 @@
 #include <godot_cpp/classes/collision_shape2d.hpp>
 #include <godot_cpp/classes/sprite2d.hpp>
 #include <godot_cpp/classes/texture_rect.hpp>
+#include <godot_cpp/classes/packed_scene.hpp>
 
 namespace godot {
 
@@ -29,6 +30,8 @@ public:
 
 	void _process(double delta) override;
 
+	void shoot_beam();
+
 protected:
 	static void _bind_methods();
 
@@ -43,6 +46,8 @@ private:
 	Sprite2D *playerSprite2d = nullptr;
 	Ref<Texture2D> texture;
     // CollisionShape2D *botCollisionShape2d;
+    Ref<PackedScene> bulletScene;
+    bool oneShot = true;
 
 };
 

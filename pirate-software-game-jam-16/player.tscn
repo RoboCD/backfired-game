@@ -6,6 +6,7 @@
 radius = 5.5
 
 [node name="Player" type="Player"]
+speed = 500.0
 texture = ExtResource("1_07lrn")
 texture_filter = 1
 
@@ -13,3 +14,6 @@ texture_filter = 1
 rotation = 1.5708
 scale = Vector2(2, 2)
 shape = SubResource("CapsuleShape2D_lvxis")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(25, 0)
