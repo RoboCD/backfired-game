@@ -16,6 +16,9 @@ public:
 
     void start(Vector2 position, double direction);
 
+	void set_speed(float p_speed);
+	float get_speed() const;
+
 protected:
 	static void _bind_methods();
 

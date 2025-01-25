@@ -1,10 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://rthhnofsnwrd"]
+[gd_scene load_steps=7 format=4 uid="uid://rthhnofsnwrd"]
 
 [ext_resource type="PackedScene" uid="uid://bnqsnvkq5q7ct" path="res://player.tscn" id="1_i2b0v"]
 [ext_resource type="Texture2D" uid="uid://cvt7eppdnhbtf" path="res://Backfire_floor.png" id="2_a6oy8"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kiqqp"]
+size = Vector2(104, 584)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wh6ey"]
-size = Vector2(738, 63.25)
+size = Vector2(1000, 63.25)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_16m47"]
+texture = ExtResource("2_a6oy8")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+
+[sub_resource type="TileSet" id="TileSet_3pw0u"]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 3
+physics_layer_0/collision_mask = 3
+sources/1 = SubResource("TileSetAtlasSource_16m47")
 
 [node name="Level-1" type="CanvasLayer"]
 follow_viewport_enabled = true
@@ -13,32 +28,72 @@ follow_viewport_enabled = true
 position = Vector2(394, 448)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-enabled = false
+zoom = Vector2(1.5, 1.5)
+limit_left = 0
+limit_bottom = 648
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(396, 611)
+[node name="Wall1" type="StaticBody2D" parent="."]
+visible = false
+collision_layer = 3
+collision_mask = 3
+metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(0, -7)
-shape = SubResource("RectangleShape2D_wh6ey")
+[node name="CollisionWall1" type="CollisionShape2D" parent="Wall1"]
+visible = false
+position = Vector2(-42, 292)
+shape = SubResource("RectangleShape2D_kiqqp")
+disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="StaticBody2D"]
+[node name="TextureRect" type="TextureRect" parent="Wall1"]
+visible = false
+z_index = 1
 texture_filter = 1
-offset_left = -369.0
-offset_top = -39.0
-offset_right = 368.0
-offset_bottom = 25.0
+offset_right = 64.0
+offset_bottom = 582.0
 texture = ExtResource("2_a6oy8")
 stretch_mode = 1
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="."]
-position = Vector2(68, 542)
+[node name="Floor1" type="StaticBody2D" parent="."]
+visible = false
+position = Vector2(369, 616)
+collision_layer = 3
+collision_mask = 3
+metadata/_edit_group_ = true
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D2"]
-position = Vector2(-26, 25)
-polygon = PackedVector2Array(-13, -14, -13, -109, 141, 6, -14, 5)
+[node name="CollisionFloor1" type="CollisionShape2D" parent="Floor1"]
+visible = false
+position = Vector2(131, 0)
+shape = SubResource("RectangleShape2D_wh6ey")
+disabled = true
 
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D2"]
-position = Vector2(234, -42)
+[node name="TextureRect" type="TextureRect" parent="Floor1"]
+visible = false
+z_index = 1
+texture_filter = 1
+offset_left = -369.0
+offset_top = -32.0
+offset_right = 631.0
+offset_bottom = 32.0
+texture = ExtResource("2_a6oy8")
+stretch_mode = 1
+
+[node name="Slope1" type="StaticBody2D" parent="."]
+position = Vector2(132, 529)
+collision_layer = 3
+collision_mask = 3
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Slope1"]
+position = Vector2(-55, 40)
+polygon = PackedVector2Array(-14, 4, -13, -109, 141, 6)
+
+[node name="Polygon2D" type="Polygon2D" parent="Slope1/CollisionPolygon2D"]
+position = Vector2(260, -67)
 color = Color(0.0196078, 0.188235, 0.309804, 1)
 polygon = PackedVector2Array(-274, 71, -272, -42, -119, 72)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+texture_filter = 1
+tile_map_data = PackedByteArray("AAAIAAkAAQAAAAAAAAAHAAkAAQAAAAAAAAAGAAkAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAAIAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAAQAAQAAAAAAAAAAAAUAAQAAAAAAAAAAAAYAAQAAAAAAAAAAAAcAAQAAAAAAAAAAAAgAAQAAAAAAAAAAAAkAAQAAAAAAAAABAAkAAQAAAAAAAAACAAkAAQAAAAAAAAADAAkAAQAAAAAAAAAEAAkAAQAAAAAAAAAFAAkAAQAAAAAAAAAAAAoAAQAAAAAAAAABAAoAAQAAAAAAAAACAAoAAQAAAAAAAAADAAoAAQAAAAAAAAAEAAoAAQAAAAAAAAAFAAoAAQAAAAAAAAAGAAoAAQAAAAAAAAAHAAoAAQAAAAAAAAAIAAoAAQAAAAAAAAAJAAoAAQAAAAAAAAAKAAoAAQAAAAAAAAALAAoAAQAAAAAAAAALAAkAAQAAAAAAAAAKAAkAAQAAAAAAAAAJAAkAAQAAAAAAAAD//wAAAQAAAAAAAAD//wEAAQAAAAAAAAD//wIAAQAAAAAAAAD//wMAAQAAAAAAAAD//wQAAQAAAAAAAAD//wUAAQAAAAAAAAD//wYAAQAAAAAAAAD//wcAAQAAAAAAAAD//wgAAQAAAAAAAAD//wkAAQAAAAAAAAD//woAAQAAAAAAAAAMAAYAAQAAAAAAAAANAAYAAQAAAAAAAAAOAAYAAQAAAAAAAAAPAAYAAQAAAAAAAAAMAAkAAQAAAAAAAAAMAAoAAQAAAAAAAAA=")
+tile_set = SubResource("TileSet_3pw0u")
+use_kinematic_bodies = true

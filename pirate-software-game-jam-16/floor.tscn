@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4g60jm25m6ie"]
+
+[ext_resource type="Texture2D" uid="uid://cvt7eppdnhbtf" path="res://Backfire_floor.png" id="1_y2p1u"]
+
+[node name="Node" type="Node"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_y2p1u")

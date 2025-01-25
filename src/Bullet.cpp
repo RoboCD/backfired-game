@@ -4,11 +4,17 @@
 #include <godot_cpp/classes/kinematic_collision2d.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/collision_shape2d.hpp>
+#include <godot_cpp/classes/engine.hpp>
 
 using namespace godot;
 
 void Bullet::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("start", "position", "direction"), &Bullet::start);
+
+    ClassDB::bind_method(D_METHOD("set_speed", "speed"), &Bullet::set_speed);
+	ClassDB::bind_method(D_METHOD("get_speed"), &Bullet::get_speed);
+
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "speed"), "set_speed", "get_speed");
 
 }
 
@@ -35,9 +41,14 @@ Bullet::~Bullet() {
 }
 
 void Bullet::_physics_process(double delta){
+    if (Engine::get_singleton()->is_editor_hint()) return; // Early return if we are in editor
     Vector2 velocity;
     Vector2(speed,0);
     Ref<KinematicCollision2D> collision = move_and_collide( Vector2(speed,0).rotated(rotation) * delta);
+    // UtilityFunctions::print("Collision: ", collision. )
+    if(!collision.is_null()){
+        queue_free();
+    }
 }
 
 void Bullet::start(Vector2 position, double direction){
@@ -53,4 +64,12 @@ void Bullet::start(Vector2 position, double direction){
     rotation = UtilityFunctions::deg_to_rad(direction);
     // set_velocity = Vector2(speed, 0).Rotated(Rotation);
 
+}
+
+void Bullet::set_speed(float p_speed) {
+	speed = p_speed;
+}
+
+float Bullet::get_speed() const {
+	return speed;
 }

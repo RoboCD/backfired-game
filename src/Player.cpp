@@ -135,6 +135,7 @@ void Player::_physics_process(double p_delta){
 	// UtilityFunctions::print("Rotation: ", rotation);
     // Marker2D * muzzle = get_node<Marker2D>("Marker2D");
 	// UtilityFunctions::print("Muzzle position: ", String(muzzle->get_position()), "Rotation: ", muzzle->get_rotation_degrees());
+	//
 	set_global_rotation_degrees(rotation);
 	set_velocity(velocity);
 	if (shoot){
