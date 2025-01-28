@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://dqwcjfoviryh5"]
+
+[ext_resource type="Texture2D" uid="uid://c6u5h01ip5nne" path="res://Backfire_Enemy_Sheet.png" id="1_lb3bt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lem2a"]
+atlas = ExtResource("1_lb3bt")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4sgrn"]
+atlas = ExtResource("1_lb3bt")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y6v4c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lem2a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4sgrn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k70b7"]
+size = Vector2(40, 64)
+
+[node name="Enemy" type="Enemy"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_y6v4c")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-6, 0)
+shape = SubResource("RectangleShape2D_k70b7")

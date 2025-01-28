@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Main_Menu.h"
 #include "Bullet.h"
+#include "Enemy.h"
 
 using namespace godot;
 
@@ -20,6 +21,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level)
 	GDREGISTER_CLASS(Player);
 	GDREGISTER_CLASS(MainMenu);
 	GDREGISTER_CLASS(Bullet);
+	GDREGISTER_CLASS(Enemy);
 }
 
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {

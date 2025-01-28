@@ -47,6 +47,16 @@ void Bullet::_physics_process(double delta){
     Ref<KinematicCollision2D> collision = move_and_collide( Vector2(speed,0).rotated(rotation) * delta);
     // UtilityFunctions::print("Collision: ", collision. )
     if(!collision.is_null()){
+        int collision_num = get_slide_collision_count();
+        String collision_class = collision->get_collider()->get_class();
+
+        UtilityFunctions::print("Hit ", collision_class);
+        if(collision_class == "Enemy"){
+            Object * collider = collision->get_collider();
+            Node * collider_node = Object::cast_to<Node>(collider);
+            collider_node->queue_free();
+        }
+
         queue_free();
     }
 }
