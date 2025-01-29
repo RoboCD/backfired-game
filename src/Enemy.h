@@ -26,9 +26,9 @@ public:
 	// void set_texture(const Ref<Texture2D> &p_texture);
 	// Ref<Texture2D> get_texture() const;
 
-	// virtual void _physics_process(double p_delta) override;
+	virtual void _physics_process(double p_delta) override;
 
-	// void _process(double delta) override;
+	void _process(double delta) override;
 
 	// void shoot_beam();
 
@@ -40,7 +40,7 @@ private:
 
 	// float speed = 600.0;
 
-	// double gravity;
+	double gravity = 980;
 
 	// AnimatedSprite2D *botSprite2d;
 	// Sprite2D *playerSprite2d = nullptr;

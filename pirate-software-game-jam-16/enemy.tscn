@@ -2,6 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://c6u5h01ip5nne" path="res://Backfire_Enemy_Sheet.png" id="1_lb3bt"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k70b7"]
+size = Vector2(40, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_lem2a"]
 atlas = ExtResource("1_lb3bt")
 region = Rect2(0, 0, 64, 64)
@@ -24,16 +27,17 @@ animations = [{
 "speed": 2.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_k70b7"]
-size = Vector2(40, 64)
-
 [node name="Enemy" type="Enemy"]
+collision_layer = 3
+collision_mask = 3
+velocity = Vector2(0, 77354.5)
+floor_stop_on_slope = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-6, 0)
+shape = SubResource("RectangleShape2D_k70b7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_y6v4c")
 autoplay = "default"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-6, 0)
-shape = SubResource("RectangleShape2D_k70b7")

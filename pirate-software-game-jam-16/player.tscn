@@ -1,13 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://bnqsnvkq5q7ct"]
 
-[ext_resource type="Texture2D" uid="uid://chben8hmmkjmi" path="res://Backfire_Gun.png" id="1_07lrn"]
+[ext_resource type="Texture2D" uid="uid://b2wh6o23tr5qn" path="res://Backfire_Gun2.png" id="1_mru7j"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lvxis"]
 radius = 5.5
 
 [node name="Player" type="Player"]
 speed = 500.0
-texture = ExtResource("1_07lrn")
+friction = 20.0
+texture = ExtResource("1_mru7j")
 texture_filter = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

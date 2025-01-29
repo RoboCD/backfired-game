@@ -23,6 +23,9 @@ public:
 	void set_gravity(float p_gravity);
 	float get_gravity() const;
 
+	void set_friction(float p_friction);
+	float get_friction() const;
+
 	void set_texture(const Ref<Texture2D> &p_texture);
 	Ref<Texture2D> get_texture() const;
 
@@ -36,11 +39,16 @@ protected:
 	static void _bind_methods();
 
 private:
+
+	Vector2 add_friction(Vector2 velcoity);
+
 	double time_passed;
 
 	float speed = 600.0;
 
 	double gravity;
+
+	double friction = 10;
 
 	// AnimatedSprite2D *botSprite2d;
 	Sprite2D *playerSprite2d = nullptr;

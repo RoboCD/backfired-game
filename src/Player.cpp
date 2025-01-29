@@ -24,6 +24,11 @@ void Player::_bind_methods() {
 
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "gravity"), "set_gravity", "get_gravity");
 
+	ClassDB::bind_method(D_METHOD("set_friction", "friction"), &Player::set_friction);
+	ClassDB::bind_method(D_METHOD("get_friction"), &Player::get_friction);
+
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "friction"), "set_friction", "get_friction");
+
 	ClassDB::bind_method(D_METHOD("set_texture", "texture"), &Player::set_texture);
 	ClassDB::bind_method(D_METHOD("get_texture"), &Player::get_texture);
 
@@ -70,6 +75,14 @@ float Player::get_gravity() const{
 	return gravity;
 }
 
+void Player::set_friction(float p_friction){
+	friction = p_friction;
+}
+
+float Player::get_friction() const{
+	return friction;
+}
+
 void Player::set_texture(const Ref<Texture2D> &p_texture){
 	texture = p_texture;
 	playerSprite2d->set_texture(p_texture);
@@ -99,7 +112,8 @@ void Player::_physics_process(double p_delta){
 	bool shoot{false};
 
 	if (is_on_floor()){
-		velocity.x = 0;
+		velocity = add_friction(velocity);
+		// velocity.x = 0;
 	}
 
 	if(input->is_action_just_pressed("shoot")){
@@ -119,6 +133,7 @@ void Player::_physics_process(double p_delta){
 	} else if (input->is_action_pressed("ui_right")) {
 		rotation += 5.0;
 	}
+	set_global_rotation_degrees(rotation);
 	double rotation_rad = UtilityFunctions::deg_to_rad(rotation);
 
 	if (shoot){
@@ -136,7 +151,6 @@ void Player::_physics_process(double p_delta){
     // Marker2D * muzzle = get_node<Marker2D>("Marker2D");
 	// UtilityFunctions::print("Muzzle position: ", String(muzzle->get_position()), "Rotation: ", muzzle->get_rotation_degrees());
 	//
-	set_global_rotation_degrees(rotation);
 	set_velocity(velocity);
 	if (shoot){
 		shoot_beam();
@@ -175,4 +189,19 @@ void Player::shoot_beam(){
     // bulletScene.Bullet.start();
 	// start_button = get_node<Button>("StartButton");
 
+}
+
+Vector2 Player::add_friction(Vector2 velcoity){
+	double x_magnitude = std::fabs(velcoity.x);
+
+	if (x_magnitude > friction){
+		x_magnitude -= friction;
+		velcoity.x = std::copysign(x_magnitude,velcoity.x);
+	}
+	else
+	{
+		velcoity.x = 0;
+	}
+
+	return velcoity;
 }
