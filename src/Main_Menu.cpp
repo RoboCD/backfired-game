@@ -23,8 +23,8 @@ void MainMenu::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "example_scene", PROPERTY_HINT_RESOURCE_TYPE, "PackedScene"), "set_scene", "get_scene");
 
     // Start button signal
-    ClassDB::bind_method(D_METHOD("on_start_button_pressed"), &MainMenu::on_start_button_pressed);
-	ADD_SIGNAL(MethodInfo("pressed"));
+    // ClassDB::bind_method(D_METHOD("on_start_button_pressed"), &MainMenu::on_start_button_pressed);
+	ADD_SIGNAL(MethodInfo("pressed_start"));
 
 }
 
@@ -56,10 +56,10 @@ void MainMenu::_ready(){
 
     start_button = get_node<Button>("StartButton");
 
-    Error error = start_button->connect("pressed", Callable(this, "on_start_button_pressed"));
-    if (error != OK) {
-       UtilityFunctions::print(String("Failed to connect signal: ") + error);
-    }
+    // Error error = start_button->connect("pressed", Callable(this, "on_start_button_pressed"));
+    // if (error != OK) {
+    //    UtilityFunctions::print(String("Failed to connect signal: ") + error);
+    // }
     UtilityFunctions::print("Should work!?");
     // if (mainScene == nullptr)
     // {
@@ -83,9 +83,11 @@ void MainMenu::_ready(){
 }
 
 void MainMenu::_process(double delta) {
+    // UtilityFunctions::print("Main menu process start");
+
     if (start_button->is_pressed()){
         UtilityFunctions::print("Start Button emit");
-        start_button->emit_signal("pressed",this,true);
+        emit_signal("pressed_start");
         // on_start_button_pressed();
     }
 	// time_passed += delta;
@@ -151,10 +153,10 @@ Ref<PackedScene> MainMenu::get_scene()
     return mainScene;
 }
 
-void MainMenu::on_start_button_pressed(){
-    UtilityFunctions::print("Start Button Pressed!");
-    SceneTree* scene_tree = get_tree();
-    levelScene = ResourceLoader::get_singleton()->load("res://level-1.tscn");
-    scene_tree->change_scene_to_packed(levelScene);
+// void MainMenu::on_start_button_pressed(){
+//     UtilityFunctions::print("Start Button Pressed!");
+//     SceneTree* scene_tree = get_tree();
+//     levelScene = ResourceLoader::get_singleton()->load("res://level-1.tscn");
+//     scene_tree->change_scene_to_packed(levelScene);
 
-}
+// }

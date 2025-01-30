@@ -24,7 +24,7 @@ public:
 
     void set_scene(Ref<PackedScene> p_scene);
     Ref<PackedScene> get_scene();
-    void on_start_button_pressed();
+    // void on_start_button_pressed();
 
 protected:
 	static void _bind_methods();

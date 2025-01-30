@@ -22,12 +22,14 @@ public:
 
     void set_scene(Ref<PackedScene> p_scene);
     Ref<PackedScene> get_scene();
+    void start_game();
 
 protected:
 	static void _bind_methods();
 
 private:
     Ref<PackedScene> mainScene;
+    // Ref<PackedScene> main_menu;
     bool firstLoop{true};
     bool nullLoop{false};
 };

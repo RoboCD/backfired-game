@@ -33,6 +33,9 @@ void Player::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_texture"), &Player::get_texture);
 
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "texture", PROPERTY_HINT_RESOURCE_TYPE, "Texture2D"), "set_texture", "get_texture");
+
+	// ADD_SIGNAL(MethodInfo("payer_died"));
+
 }
 
 Player::Player() {
@@ -151,11 +154,30 @@ void Player::_physics_process(double p_delta){
     // Marker2D * muzzle = get_node<Marker2D>("Marker2D");
 	// UtilityFunctions::print("Muzzle position: ", String(muzzle->get_position()), "Rotation: ", muzzle->get_rotation_degrees());
 	//
+	int collision_num = get_slide_collision_count();
+
+	for (int i = 0; i < collision_num; i++){
+		Ref<KinematicCollision2D> collision = get_slide_collision(i);
+		// if(!collision.is_null()){
+        String collision_class = collision->get_collider()->get_class();
+
+        UtilityFunctions::print("Hit Player: ", collision_class);
+        if(collision_class == "Enemy"){
+			// Die
+			queue_free();
+            // Object * collider = collision->get_collider();
+            // Node * collider_node = Object::cast_to<Node>(collider);
+            // collider_node->queue_free();
+        }
+    }
+
 	set_velocity(velocity);
 	if (shoot){
 		shoot_beam();
 	}
 	move_and_slide();
+
+
 }
 
 void Player::shoot_beam(){
@@ -205,3 +227,10 @@ Vector2 Player::add_friction(Vector2 velcoity){
 
 	return velcoity;
 }
+
+// void Player::die(){
+// 	UtilityFunctions::print("Player died");
+// 	emit_signal("payer_died",this,true);
+// 	// on_start_button_pressed();
+
+// }

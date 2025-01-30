@@ -1,4 +1,5 @@
 #include "Main.h"
+#include "Main_Menu.h"
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
@@ -8,6 +9,7 @@
 #include <gdextension_interface.h>
 #include <godot_cpp/classes/resource.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
+#include <godot_cpp/classes/scene_tree.hpp>
 
 using namespace godot;
 
@@ -20,6 +22,9 @@ void Main::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_scene", "p_scene"), &Main::set_scene);
     ClassDB::bind_method(D_METHOD("get_scene"), &Main::get_scene);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "example_scene", PROPERTY_HINT_RESOURCE_TYPE, "PackedScene"), "set_scene", "get_scene");
+
+    ClassDB::bind_method(D_METHOD("start_game"), &Main::start_game);
+
 }
 
 Main::Main() {
@@ -47,6 +52,18 @@ Main::~Main() {
 // }
 
 void Main::_ready(){
+    UtilityFunctions::print("Main start");
+
+
+    MainMenu* main_menu = get_node<MainMenu>("MainMenu");
+    UtilityFunctions::print("Got main menu");
+    main_menu->set_process(true);
+    Error error = main_menu->connect("pressed_start", Callable(this, "start_game"));
+    UtilityFunctions::print("main menu signal connect");
+    if (error != OK) {
+       UtilityFunctions::print(String("Failed to connect signal: ") + error);
+    }
+    UtilityFunctions::print("Main node started");
 
     // if (mainScene == nullptr)
     // {
@@ -131,4 +148,11 @@ void Main::set_scene(Ref<PackedScene> p_scene)
 Ref<PackedScene> Main::get_scene()
 {
     return mainScene;
+}
+
+void Main::start_game(){
+    UtilityFunctions::print("Start Game Pressed!");
+    SceneTree* scene_tree = get_tree();
+    Ref<PackedScene> level1Scene = ResourceLoader::get_singleton()->load("res://level-1.tscn");
+    scene_tree->change_scene_to_packed(level1Scene);
 }

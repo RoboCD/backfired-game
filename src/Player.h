@@ -42,6 +42,8 @@ private:
 
 	Vector2 add_friction(Vector2 velcoity);
 
+	// void die();
+
 	double time_passed;
 
 	float speed = 600.0;
