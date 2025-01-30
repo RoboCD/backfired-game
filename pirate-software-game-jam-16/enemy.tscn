@@ -28,9 +28,10 @@ animations = [{
 }]
 
 [node name="Enemy" type="Enemy"]
+position = Vector2(0, 182359)
 collision_layer = 3
 collision_mask = 3
-velocity = Vector2(0, 85800.1)
+velocity = Vector2(0, 87858.4)
 floor_stop_on_slope = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

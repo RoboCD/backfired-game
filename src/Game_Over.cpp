@@ -1,7 +1,4 @@
-#include "Main.h"
-#include "Main_Menu.h"
 #include "Game_Over.h"
-#include "Player.h"
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
@@ -15,22 +12,23 @@
 
 using namespace godot;
 
-void Main::_bind_methods() {
-	// ClassDB::bind_method(D_METHOD("set_speed", "speed"), &Main::set_speed);
-	// ClassDB::bind_method(D_METHOD("get_speed"), &Main::get_speed);
+void GameOver::_bind_methods() {
+	// ClassDB::bind_method(D_METHOD("set_speed", "speed"), &MainMenu::set_speed);
+	// ClassDB::bind_method(D_METHOD("get_speed"), &MainMenu::get_speed);
 
 	// ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "speed"), "set_speed", "get_speed");
     // PackedScene
-    ClassDB::bind_method(D_METHOD("set_scene", "p_scene"), &Main::set_scene);
-    ClassDB::bind_method(D_METHOD("get_scene"), &Main::get_scene);
+    ClassDB::bind_method(D_METHOD("set_scene", "p_scene"), &GameOver::set_scene);
+    ClassDB::bind_method(D_METHOD("get_scene"), &GameOver::get_scene);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "example_scene", PROPERTY_HINT_RESOURCE_TYPE, "PackedScene"), "set_scene", "get_scene");
 
-    ClassDB::bind_method(D_METHOD("start_game"), &Main::start_game);
-    ClassDB::bind_method(D_METHOD("game_over", "p_node"), &Main::game_over);
+    // Start button signal
+    // ClassDB::bind_method(D_METHOD("on_restart_button_pressed"), &GameOver::on_restart_button_pressed);
+	ADD_SIGNAL(MethodInfo("pressed_restart"));
 
 }
 
-Main::Main() {
+GameOver::GameOver() {
 	// Initialize any variables here.
 	// time_passed = 0.0;5
 	// botCollisionShape2d = memnew(CollisionShape2D);
@@ -42,32 +40,27 @@ Main::Main() {
 	// botSprite2d->set_sprite_frames()
 }
 
-Main::~Main() {
+GameOver::~GameOver() {
 	// Add your cleanup here.
 }
 
-// void Main::set_speed(float p_speed) {
+// void MainMenu::set_speed(float p_speed) {
 // 	speed = p_speed;
 // }
 
-// float Main::get_speed() const {
+// float MainMenu::get_speed() const {
 // 	return speed;
 // }
 
-void Main::_ready(){
-    UtilityFunctions::print("Main start");
+void GameOver::_ready(){
+    set_visible(false);
+    // start_button = get_node<Button>("StartButton");
 
-
-    MainMenu* main_menu = get_node<MainMenu>("MainMenu");
-    UtilityFunctions::print("Got main menu");
-    main_menu->set_process(true);
-    Error error = main_menu->connect("pressed_start", Callable(this, "start_game"));
-    UtilityFunctions::print("main menu signal connect");
-    if (error != OK) {
-       UtilityFunctions::print(String("Failed to connect signal: ") + error);
-    }
-    UtilityFunctions::print("Main node started");
-
+    // Error error = start_button->connect("pressed", Callable(this, "on_start_button_pressed"));
+    // if (error != OK) {
+    //    UtilityFunctions::print(String("Failed to connect signal: ") + error);
+    // }
+    // UtilityFunctions::print("Should work!?");
     // if (mainScene == nullptr)
     // {
     //     return;
@@ -89,33 +82,12 @@ void Main::_ready(){
     // UtilityFunctions::print(inst->get_name());
 }
 
-void Main::_process(double delta) {
-    SceneTree* scene_tree = get_tree();
-    Node * curr_scene = scene_tree->get_current_scene();
-    UtilityFunctions::print("Current Scene ", curr_scene->get_name());
-    if (!levelLoaded){
-        Node* level_1_scene = get_node_or_null("Level-1");
-
-        if (level_1_scene != nullptr)
-        {
-            Player * player = level_1_scene->get_node<Player>("Player");
-            Error error = player->connect("payer_died", Callable(this, "game_over"));
-            UtilityFunctions::print("main player signal connect");
-            if (error != OK) {
-                UtilityFunctions::print(String("Failed to connect signal: ") + error);
-            }
-        }
-    }
-    // if (curr_scene->get_name() == String("Level-1")){
-
-
-    //     Ref<PackedScene> game_over_scene = ResourceLoader::get_singleton()->load("res://game_over.tscn");
-    //     Node* game_over_inst = game_over_scene->instantiate();
-    //     GameOver* game_over_node = game_over_inst->get_node<GameOver>(".");
-    //     curr_scene->get_node<Player>("Player")->add_child(game_over_node);
-
+void GameOver::_process(double delta) {
+    // if (start_button->is_pressed()){
+    //     UtilityFunctions::print("Start Button emit");
+    //     start_button->emit_signal("pressed",this,true);
+    //     // on_start_button_pressed();
     // }
-
 	// time_passed += delta;
     // if (firstLoop){
     // Ref<PackedScene> packed_scene;
@@ -150,7 +122,7 @@ void Main::_process(double delta) {
     // }
 }
 
-// void Main::_physics_process(double p_delta){
+// void MainMenu::_physics_process(double p_delta){
 // 	Input *input = Input::get_singleton();
 
 // 	Vector2 velocity;
@@ -169,31 +141,20 @@ void Main::_process(double delta) {
 // 	move_and_slide();
 // }
 
-void Main::set_scene(Ref<PackedScene> p_scene)
+void GameOver::set_scene(Ref<PackedScene> p_scene)
 {
     mainScene = p_scene;
 }
 
-Ref<PackedScene> Main::get_scene()
+Ref<PackedScene> GameOver::get_scene()
 {
     return mainScene;
 }
 
-void Main::start_game(){
-    UtilityFunctions::print("Start Game Pressed!");
+void GameOver::on_restart_button_pressed(){
+    UtilityFunctions::print("Start Button Pressed!");
     SceneTree* scene_tree = get_tree();
-    Node * curr_scene = scene_tree->get_current_scene();
-    Ref<PackedScene> level1Scene = ResourceLoader::get_singleton()->load("res://level-1.tscn");
-    // scene_tree->change_scene_to_packed(level1Scene);
-    Node* level_1_inst = level1Scene->instantiate();
-    CanvasLayer* level_1_node = level_1_inst->get_node<CanvasLayer>(".");
-    curr_scene->add_child(level_1_node);
-    MainMenu* main_menu = curr_scene->get_node<MainMenu>("MainMenu");
-    main_menu->hide();
-}
-
-void Main::game_over(Node* p_node){
-// void Main::game_over(){
-    p_node->get_node<GameOver>("GameOver")->show();
+    levelScene = ResourceLoader::get_singleton()->load("res://level-1.tscn");
+    scene_tree->change_scene_to_packed(levelScene);
 
 }

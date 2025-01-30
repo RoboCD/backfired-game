@@ -34,6 +34,7 @@ void Player::_bind_methods() {
 
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "texture", PROPERTY_HINT_RESOURCE_TYPE, "Texture2D"), "set_texture", "get_texture");
 
+	ADD_SIGNAL(MethodInfo("payer_died", PropertyInfo(Variant::OBJECT, "node")));
 	// ADD_SIGNAL(MethodInfo("payer_died"));
 
 }
@@ -164,7 +165,8 @@ void Player::_physics_process(double p_delta){
         UtilityFunctions::print("Hit Player: ", collision_class);
         if(collision_class == "Enemy"){
 			// Die
-			queue_free();
+			die();
+			// queue_free();
             // Object * collider = collision->get_collider();
             // Node * collider_node = Object::cast_to<Node>(collider);
             // collider_node->queue_free();
@@ -228,9 +230,9 @@ Vector2 Player::add_friction(Vector2 velcoity){
 	return velcoity;
 }
 
-// void Player::die(){
-// 	UtilityFunctions::print("Player died");
-// 	emit_signal("payer_died",this,true);
-// 	// on_start_button_pressed();
+void Player::die(){
+	UtilityFunctions::print("Player died");
+	emit_signal("payer_died",this);
+	// on_start_button_pressed();
 
-// }
+}

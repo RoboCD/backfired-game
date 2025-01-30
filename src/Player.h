@@ -42,7 +42,7 @@ private:
 
 	Vector2 add_friction(Vector2 velcoity);
 
-	// void die();
+	void die();
 
 	double time_passed;
 
