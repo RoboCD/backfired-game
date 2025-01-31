@@ -26,6 +26,10 @@ public:
     Ref<PackedScene> get_scene();
     void on_restart_button_pressed();
 
+    void set_message(String p_message);
+
+    void set_deaths(int deaths);
+
 protected:
 	static void _bind_methods();
 
@@ -36,6 +40,7 @@ private:
     bool nullLoop{false};
     bool pressed_once{false};
     Button * restart_button = nullptr;
+    String message{};
 };
 
 }

@@ -38,6 +38,8 @@ public:
 
 	void shoot_beam();
 
+    void set_dead(bool p_dead);
+
 protected:
 	static void _bind_methods();
 

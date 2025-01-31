@@ -3,9 +3,8 @@
 [ext_resource type="Theme" uid="uid://bpoxbytxf2skn" path="res://backfired_menu.tres" id="1_64nf8"]
 
 [node name="GameOver" type="GameOver"]
-visible = false
 
-[node name="Label" type="Label" parent="."]
+[node name="Message" type="Label" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -37,3 +36,21 @@ grow_vertical = 0
 theme = ExtResource("1_64nf8")
 theme_override_font_sizes/font_size = 50
 text = "Restart?"
+
+[node name="Deaths" type="Label" parent="."]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -114.0
+offset_top = -202.0
+offset_right = 123.0
+offset_bottom = -133.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "Deaths: "
+horizontal_alignment = 1
+vertical_alignment = 1

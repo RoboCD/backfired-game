@@ -277,3 +277,7 @@ void Player::die(){
 		get_node<AudioStreamPlayer>("Death Sound")->play();
 	}
 }
+
+void Player::set_dead(bool p_dead){
+	dead = p_dead;
+}

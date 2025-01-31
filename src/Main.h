@@ -25,6 +25,7 @@ public:
     void start_game();
     void game_over(Node* p_node);
     void restart_game();
+    void game_won(Node* p_node);
 protected:
 	static void _bind_methods();
 
@@ -34,7 +35,7 @@ private:
     bool firstLoop{true};
     bool nullLoop{false};
     bool levelLoaded{false};
-    bool player_died_sig_connect{false};
+    bool signals_connected{false};
     bool game_over_sig_connect{false};
     int numTries{0};
 };

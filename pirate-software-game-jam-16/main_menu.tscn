@@ -1,10 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5x7wie07uyj5"]
+[gd_scene load_steps=3 format=3 uid="uid://c5x7wie07uyj5"]
 
 [ext_resource type="Theme" uid="uid://bpoxbytxf2skn" path="res://backfired_menu.tres" id="1_gvicu"]
+[ext_resource type="Texture2D" uid="uid://bcokr5874hkfu" path="res://Backfired_Title.png" id="2_842cm"]
 
 [node name="MainMenu" type="MainMenu"]
 
 [node name="StartButton" type="Button" parent="."]
+top_level = true
+light_mask = 1023
+visibility_layer = 1023
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -21,6 +25,8 @@ theme_override_font_sizes/font_size = 50
 text = "Start"
 
 [node name="Label" type="Label" parent="."]
+visible = false
+z_index = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -35,3 +41,20 @@ grow_vertical = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 80
 text = "Backfired"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(648, 363)
+scale = Vector2(3, 3)
+texture = ExtResource("2_842cm")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+show_behind_parent = true
+z_index = -3
+offset_left = 1.0
+offset_right = 1282.0
+offset_bottom = 720.0
+color = Color(0.281187, 0.281187, 0.281187, 1)

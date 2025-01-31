@@ -9,6 +9,7 @@
 #include <godot_cpp/classes/resource.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/scene_tree.hpp>
+#include <godot_cpp/classes/label.hpp>
 
 using namespace godot;
 
@@ -56,7 +57,7 @@ void GameOver::_ready(){
     set_visible(false);
     restart_button = get_node<Button>("RestartButton");
     pressed_once = false;
-
+    message = "GAME OVER";
     // Error error = start_button->connect("pressed", Callable(this, "on_start_button_pressed"));
     // if (error != OK) {
     //    UtilityFunctions::print(String("Failed to connect signal: ") + error);
@@ -158,5 +159,19 @@ void GameOver::on_restart_button_pressed(){
     SceneTree* scene_tree = get_tree();
     levelScene = ResourceLoader::get_singleton()->load("res://level-1.tscn");
     scene_tree->change_scene_to_packed(levelScene);
+
+}
+
+
+void GameOver::set_message(String p_message){
+    message = p_message;
+    get_node<Label>("Message")->set_text(message);
+}
+
+void GameOver::set_deaths(int deaths){
+
+    Label* death_label = get_node<Label>("Deaths");
+    death_label->set_text(String("Deaths: " +String::num(deaths)));
+    death_label->show();
 
 }
