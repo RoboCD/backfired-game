@@ -24,7 +24,7 @@ public:
     Ref<PackedScene> get_scene();
     void start_game();
     void game_over(Node* p_node);
-    // void game_over();
+    void restart_game();
 protected:
 	static void _bind_methods();
 
@@ -34,6 +34,8 @@ private:
     bool firstLoop{true};
     bool nullLoop{false};
     bool levelLoaded{false};
+    bool player_died_sig_connect{false};
+    bool game_over_sig_connect{false};
 };
 
 }

@@ -17,6 +17,8 @@ public:
 	Player();
 	~Player();
 
+    void _ready() override;
+
 	void set_speed(float p_speed);
 	float get_speed() const;
 

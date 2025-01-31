@@ -54,7 +54,8 @@ GameOver::~GameOver() {
 
 void GameOver::_ready(){
     set_visible(false);
-    // start_button = get_node<Button>("StartButton");
+    restart_button = get_node<Button>("RestartButton");
+    pressed_once = false;
 
     // Error error = start_button->connect("pressed", Callable(this, "on_start_button_pressed"));
     // if (error != OK) {
@@ -83,11 +84,12 @@ void GameOver::_ready(){
 }
 
 void GameOver::_process(double delta) {
-    // if (start_button->is_pressed()){
-    //     UtilityFunctions::print("Start Button emit");
-    //     start_button->emit_signal("pressed",this,true);
-    //     // on_start_button_pressed();
-    // }
+    if ((restart_button->is_pressed()) && pressed_once != true){
+        pressed_once = true;
+        UtilityFunctions::print("Restart Button emit");
+        emit_signal("pressed_restart");
+        // on_start_button_pressed();
+    }
 	// time_passed += delta;
     // if (firstLoop){
     // Ref<PackedScene> packed_scene;
@@ -152,7 +154,7 @@ Ref<PackedScene> GameOver::get_scene()
 }
 
 void GameOver::on_restart_button_pressed(){
-    UtilityFunctions::print("Start Button Pressed!");
+    UtilityFunctions::print("Restart Button Pressed!");
     SceneTree* scene_tree = get_tree();
     levelScene = ResourceLoader::get_singleton()->load("res://level-1.tscn");
     scene_tree->change_scene_to_packed(levelScene);

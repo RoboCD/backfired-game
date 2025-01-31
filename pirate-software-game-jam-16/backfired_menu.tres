@@ -1,0 +1,8 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bpoxbytxf2skn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k60ye"]
+bg_color = Color(0.144063, 0.144063, 0.144062, 1)
+
+[resource]
+default_base_scale = 2.0
+Button/styles/normal = SubResource("StyleBoxFlat_k60ye")

@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://c5x7wie07uyj5"]
+[gd_scene load_steps=2 format=3 uid="uid://c5x7wie07uyj5"]
+
+[ext_resource type="Theme" uid="uid://bpoxbytxf2skn" path="res://backfired_menu.tres" id="1_gvicu"]
 
 [node name="MainMenu" type="MainMenu"]
 
@@ -14,6 +16,7 @@ offset_right = 96.0
 offset_bottom = -95.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("1_gvicu")
 theme_override_font_sizes/font_size = 50
 text = "Start"
 

@@ -33,7 +33,7 @@ tile_set = SubResource("TileSet_3pw0u")
 use_kinematic_bodies = true
 
 [node name="Player" parent="." instance=ExtResource("1_i2b0v")]
-position = Vector2(394, 448)
+position = Vector2(395, 448)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(1.5, 1.5)
@@ -41,6 +41,7 @@ limit_left = 0
 limit_bottom = 648
 
 [node name="GameOver" parent="Player" instance=ExtResource("3_vnbeu")]
+visible = false
 
 [node name="Wall1" type="StaticBody2D" parent="."]
 visible = false

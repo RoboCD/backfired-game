@@ -27,6 +27,7 @@ void Main::_bind_methods() {
 
     ClassDB::bind_method(D_METHOD("start_game"), &Main::start_game);
     ClassDB::bind_method(D_METHOD("game_over", "p_node"), &Main::game_over);
+    ClassDB::bind_method(D_METHOD("restart_game"), &Main::restart_game);
 
 }
 
@@ -91,21 +92,42 @@ void Main::_ready(){
 
 void Main::_process(double delta) {
     SceneTree* scene_tree = get_tree();
-    Node * curr_scene = scene_tree->get_current_scene();
-    UtilityFunctions::print("Current Scene ", curr_scene->get_name());
-    if (!levelLoaded){
-        Node* level_1_scene = get_node_or_null("Level-1");
 
-        if (level_1_scene != nullptr)
-        {
-            Player * player = level_1_scene->get_node<Player>("Player");
-            Error error = player->connect("payer_died", Callable(this, "game_over"));
-            UtilityFunctions::print("main player signal connect");
-            if (error != OK) {
-                UtilityFunctions::print(String("Failed to connect signal: ") + error);
-            }
+    Node * curr_scene = scene_tree->get_current_scene();
+    // UtilityFunctions::print("Current Scene ", curr_scene->get_name());
+    // if (!levelLoaded){
+    Node* level_1_scene = get_node_or_null("Level-1");
+    curr_scene->print_tree();
+    if (level_1_scene == nullptr){
+        // UtilityFunctions::print("level 1 null");
+        // curr_scene->print_tree();
+        return;
+    }
+    if ((player_died_sig_connect == false))
+    {
+        UtilityFunctions::print("main connect signals");
+        Player * player = level_1_scene->get_node<Player>("Player");
+        // Node * player = curr_scene->find_child("Player");
+        // Player * player = Node::cast_to<Player>(player_node);
+        Error error = player->connect("player_died", Callable(this, "game_over"));
+        UtilityFunctions::print("main player signal connect");
+        if (error != OK) {
+            UtilityFunctions::print(String("Failed to connect signal: ") + error);
+        }
+        else{
+            // levelLoaded = true;
+            player_died_sig_connect = true;
+        }
+        GameOver * game_over_node = player->get_node<GameOver>("GameOver");
+        Error error_go = game_over_node->connect("pressed_restart", Callable(this, "restart_game"));
+        UtilityFunctions::print("game over node signal connect");
+        if (error_go != OK) {
+            UtilityFunctions::print(String("Failed to connect signal: ") + error);
         }
     }
+
+    // }
+
     // if (curr_scene->get_name() == String("Level-1")){
 
 
@@ -183,17 +205,44 @@ void Main::start_game(){
     UtilityFunctions::print("Start Game Pressed!");
     SceneTree* scene_tree = get_tree();
     Node * curr_scene = scene_tree->get_current_scene();
+    // if (levelLoaded){
+    //     curr_scene->get_node<Player>("Player")->get_node<GameOver>("GameOver")->hide();
+    //     // scene_tree->reload_current_scene();
+    //     curr_scene->queue_free();
+    // }
+    // else
+    // {
     Ref<PackedScene> level1Scene = ResourceLoader::get_singleton()->load("res://level-1.tscn");
     // scene_tree->change_scene_to_packed(level1Scene);
     Node* level_1_inst = level1Scene->instantiate();
     CanvasLayer* level_1_node = level_1_inst->get_node<CanvasLayer>(".");
+    level_1_node->set_name("Level-1");
     curr_scene->add_child(level_1_node);
     MainMenu* main_menu = curr_scene->get_node<MainMenu>("MainMenu");
     main_menu->hide();
+    // }
+
 }
 
 void Main::game_over(Node* p_node){
 // void Main::game_over(){
+    UtilityFunctions::print("Game Over!");
     p_node->get_node<GameOver>("GameOver")->show();
 
+}
+
+void Main::restart_game(){
+    SceneTree* scene_tree = get_tree();
+    Node * curr_scene = scene_tree->get_current_scene();
+    // if (levelLoaded){
+    CanvasLayer* level_1_node = curr_scene->get_node<CanvasLayer>("Level-1");
+    level_1_node->get_node<Player>("Player")->get_node<GameOver>("GameOver")->hide();
+    level_1_node->queue_free();
+    player_died_sig_connect = false;
+    // scene_tree->reload_current_scene();
+    start_game();
+    // MainMenu* main_menu = curr_scene->get_node<MainMenu>("MainMenu");
+    // main_menu->show();
+    // }
+    // start_game();
 }

@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://dqkobguoc3kdh"]
+[gd_scene load_steps=2 format=3 uid="uid://dqkobguoc3kdh"]
+
+[ext_resource type="Theme" uid="uid://bpoxbytxf2skn" path="res://backfired_menu.tres" id="1_64nf8"]
 
 [node name="GameOver" type="GameOver"]
 
@@ -19,7 +21,7 @@ text = "GAME OVER"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="."]
+[node name="RestartButton" type="Button" parent="."]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -31,5 +33,6 @@ offset_right = 151.0
 offset_bottom = -109.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("1_64nf8")
 theme_override_font_sizes/font_size = 50
 text = "Restart?"

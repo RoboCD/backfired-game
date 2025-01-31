@@ -34,8 +34,8 @@ private:
     Ref<PackedScene> levelScene;
     bool firstLoop{true};
     bool nullLoop{false};
-
-    Button * start_button = nullptr;
+    bool pressed_once{false};
+    Button * restart_button = nullptr;
 };
 
 }
