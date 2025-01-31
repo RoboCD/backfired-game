@@ -44,7 +44,6 @@ Bullet::~Bullet() {
 void Bullet::_physics_process(double delta){
     if (Engine::get_singleton()->is_editor_hint()) return; // Early return if we are in editor
     Vector2 velocity;
-    Vector2(speed,0);
     Ref<KinematicCollision2D> collision = move_and_collide( Vector2(speed,0).rotated(rotation) * delta);
     // UtilityFunctions::print("Collision: ", collision. )
     if(!collision.is_null()){

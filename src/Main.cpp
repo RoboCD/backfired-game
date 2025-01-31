@@ -105,7 +105,7 @@ void Main::_process(double delta) {
         // curr_scene->print_tree();
         return;
     }
-    if ((signals_connected == false))
+    if (signals_connected == false)
     {
         UtilityFunctions::print("main connect signals");
         Player * player = level_1_scene->get_node<Player>("Player");
