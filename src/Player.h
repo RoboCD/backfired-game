@@ -8,6 +8,7 @@
 #include <godot_cpp/classes/sprite2d.hpp>
 #include <godot_cpp/classes/texture_rect.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
+#include <godot_cpp/classes/visible_on_screen_notifier2d.hpp>
 
 namespace godot {
 
@@ -56,6 +57,7 @@ private:
 
 	// AnimatedSprite2D *botSprite2d;
 	Sprite2D *playerSprite2d = nullptr;
+    VisibleOnScreenNotifier2D* notifier = nullptr;
 	Ref<Texture2D> texture;
     // CollisionShape2D *botCollisionShape2d;
     Ref<PackedScene> bulletScene;

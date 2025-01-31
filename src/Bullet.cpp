@@ -5,6 +5,7 @@
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/collision_shape2d.hpp>
 #include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/classes/audio_stream_player.hpp>
 
 using namespace godot;
 
@@ -55,9 +56,13 @@ void Bullet::_physics_process(double delta){
             Object * collider = collision->get_collider();
             Node * collider_node = Object::cast_to<Node>(collider);
             collider_node->queue_free();
-        }
+            get_parent()->get_node<AudioStreamPlayer>("Enemy Hit")->play();
 
-        queue_free();
+        }
+        hide();
+        // _sleep(1);
+        call_deferred("queue_free");
+        // queue_free();
     }
 }
 
@@ -71,6 +76,8 @@ void Bullet::start(Vector2 position, double direction){
     // set_global_position(Vector2(100,100));
     set_global_position(position);
     set_global_rotation_degrees(direction);
+    set_as_top_level(true);
+    set_z_index(10);
     rotation = UtilityFunctions::deg_to_rad(direction);
     // set_velocity = Vector2(speed, 0).Rotated(Rotation);
 

@@ -8,6 +8,8 @@
 #include <godot_cpp/classes/scene_tree.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/marker2d.hpp>
+#include <godot_cpp/classes/audio_stream_player.hpp>
+#include <godot_cpp/classes/viewport.hpp>
 
 #include "Bullet.h"
 
@@ -66,6 +68,13 @@ Player::~Player() {
 void Player::_ready(){
 	show();
 	dead = false;
+	// ... (Other includes and code)
+
+	// notifier = memnew(VisibleOnScreenNotifier2D);
+    // add_child(notifier);
+
+    // notifier->connect("screen_exited", Callable(this, "die"));
+
 }
 
 void Player::set_speed(float p_speed) {
@@ -105,10 +114,22 @@ Ref<Texture2D> Player::get_texture() const{
 
 void Player::_process(double delta) {
 	time_passed += delta;
-
+	// if (notifier->is_on_screen()== false){
+	// 	die();
+	// }
 	// Vector2 new_position = Vector2(10.0 + (10.0 * sin(time_passed * 2.0)), 10.0 + (10.0 * cos(time_passed * 1.5)));
 
 	// set_position(new_position);
+	// Viewport* viewport = get_viewport();
+	// Rect2 viewport_rect = viewport->get_visible_rect();
+	Vector2 position = get_global_position();
+	if (position.y > 1000){
+		die();
+	}
+	// position.y -= 64;
+	// if (!viewport_rect.has_point(position)){
+	// 	die();
+	// }
 }
 
 void Player::_physics_process(double p_delta){
@@ -225,6 +246,9 @@ void Player::shoot_beam(){
     // bulletScene.Bullet.start();
 	// start_button = get_node<Button>("StartButton");
 
+	// Play sound
+	get_node<AudioStreamPlayer>("Lazer Sound")->play();
+
 }
 
 Vector2 Player::add_friction(Vector2 velcoity){
@@ -243,10 +267,13 @@ Vector2 Player::add_friction(Vector2 velcoity){
 }
 
 void Player::die(){
-	UtilityFunctions::print("Player died");
-	emit_signal("player_died",this);
-	// on_start_button_pressed();
-	// queue_free();
-	hide();
-
+	if (!dead){
+		UtilityFunctions::print("Player died");
+		dead = true;
+		emit_signal("player_died",this);
+		// on_start_button_pressed();
+		// queue_free();
+		hide();
+		get_node<AudioStreamPlayer>("Death Sound")->play();
+	}
 }

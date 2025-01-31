@@ -3,6 +3,7 @@
 [ext_resource type="Theme" uid="uid://bpoxbytxf2skn" path="res://backfired_menu.tres" id="1_64nf8"]
 
 [node name="GameOver" type="GameOver"]
+visible = false
 
 [node name="Label" type="Label" parent="."]
 anchors_preset = 8

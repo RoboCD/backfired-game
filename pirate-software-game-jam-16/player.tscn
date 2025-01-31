@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bnqsnvkq5q7ct"]
+[gd_scene load_steps=5 format=3 uid="uid://bnqsnvkq5q7ct"]
 
 [ext_resource type="Texture2D" uid="uid://b2wh6o23tr5qn" path="res://Backfire_Gun2.png" id="1_mru7j"]
+[ext_resource type="AudioStream" uid="uid://c6l6q1lwh7p07" path="res://Retro Gun Laser SingleShot 01.wav" id="2_yd1et"]
+[ext_resource type="AudioStream" uid="uid://bgegrx3xqldb4" path="res://Retro Explosion Long 02.wav" id="3_15spe"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lvxis"]
 radius = 5.5
@@ -17,4 +19,12 @@ scale = Vector2(2, 2)
 shape = SubResource("CapsuleShape2D_lvxis")
 
 [node name="Marker2D" type="Marker2D" parent="."]
+z_as_relative = false
 position = Vector2(25, 0)
+
+[node name="Lazer Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_yd1et")
+volume_db = 5.0
+
+[node name="Death Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_15spe")
