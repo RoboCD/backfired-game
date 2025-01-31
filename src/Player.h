@@ -60,7 +60,7 @@ private:
     // CollisionShape2D *botCollisionShape2d;
     Ref<PackedScene> bulletScene;
     bool oneShot = true;
-
+	bool dead = false;
 };
 
 }

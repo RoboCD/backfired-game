@@ -65,6 +65,7 @@ Player::~Player() {
 
 void Player::_ready(){
 	show();
+	dead = false;
 }
 
 void Player::set_speed(float p_speed) {
@@ -112,6 +113,9 @@ void Player::_process(double delta) {
 
 void Player::_physics_process(double p_delta){
 	if (Engine::get_singleton()->is_editor_hint()) return; // Early return if we are in editor
+	if (dead){
+		return;
+	}
 	Input *input = Input::get_singleton();
 
 	Vector2 velocity = get_velocity();
@@ -170,6 +174,9 @@ void Player::_physics_process(double p_delta){
         if(collision_class == "Enemy"){
 			UtilityFunctions::print("Hit Player: ", collision_class);
 			// Die
+			velocity.x = 0;
+			velocity.y = 0;
+			set_velocity(velocity);
 			die();
 			// queue_free();
             // Object * collider = collision->get_collider();

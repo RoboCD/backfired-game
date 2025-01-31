@@ -96,8 +96,8 @@ void Main::_process(double delta) {
     Node * curr_scene = scene_tree->get_current_scene();
     // UtilityFunctions::print("Current Scene ", curr_scene->get_name());
     // if (!levelLoaded){
-    Node* level_1_scene = get_node_or_null("Level-1");
-    curr_scene->print_tree();
+    Node* level_1_scene = get_node_or_null(NodePath(String("Level-1_"+String::num(numTries))));
+    // curr_scene->print_tree();
     if (level_1_scene == nullptr){
         // UtilityFunctions::print("level 1 null");
         // curr_scene->print_tree();
@@ -216,7 +216,7 @@ void Main::start_game(){
     // scene_tree->change_scene_to_packed(level1Scene);
     Node* level_1_inst = level1Scene->instantiate();
     CanvasLayer* level_1_node = level_1_inst->get_node<CanvasLayer>(".");
-    level_1_node->set_name("Level-1");
+    level_1_node->set_name("Level-1_"+String::num(numTries));
     curr_scene->add_child(level_1_node);
     MainMenu* main_menu = curr_scene->get_node<MainMenu>("MainMenu");
     main_menu->hide();
@@ -235,10 +235,11 @@ void Main::restart_game(){
     SceneTree* scene_tree = get_tree();
     Node * curr_scene = scene_tree->get_current_scene();
     // if (levelLoaded){
-    CanvasLayer* level_1_node = curr_scene->get_node<CanvasLayer>("Level-1");
+    CanvasLayer* level_1_node = curr_scene->get_node<CanvasLayer>("Level-1_"+String::num(numTries));
     level_1_node->get_node<Player>("Player")->get_node<GameOver>("GameOver")->hide();
     level_1_node->queue_free();
     player_died_sig_connect = false;
+    numTries++;
     // scene_tree->reload_current_scene();
     start_game();
     // MainMenu* main_menu = curr_scene->get_node<MainMenu>("MainMenu");

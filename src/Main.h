@@ -36,6 +36,7 @@ private:
     bool levelLoaded{false};
     bool player_died_sig_connect{false};
     bool game_over_sig_connect{false};
+    int numTries{0};
 };
 
 }
