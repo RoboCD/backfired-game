@@ -34,7 +34,7 @@ packet_sequence = SubResource("OggPacketSequence_vwe46")
 loop = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r4lar"]
-size = Vector2(1018, 195)
+size = Vector2(1017, 190)
 
 [node name="Level-1" type="CanvasLayer"]
 follow_viewport_enabled = true
@@ -55,7 +55,6 @@ limit_top = -128
 limit_bottom = 648
 
 [node name="GameOver" parent="Player" instance=ExtResource("3_vnbeu")]
-visible = false
 
 [node name="BackgroundLayer" type="CanvasLayer" parent="."]
 layer = -1
@@ -193,5 +192,5 @@ velocity = Vector2(0, 2.81165e+07)
 [node name="Exit" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exit"]
-position = Vector2(7484, 97)
+position = Vector2(7483.5, 96)
 shape = SubResource("RectangleShape2D_r4lar")

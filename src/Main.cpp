@@ -266,6 +266,11 @@ void Main::restart_game(){
 }
 
 void Main::game_won(Node* p_node){
+    String node_name = p_node->get_name();
+    UtilityFunctions::print("Node ", node_name, " entered exit area");
+    if (node_name != "Player"){
+        return;
+    }
     UtilityFunctions::print("You Won!");
     SceneTree* scene_tree = get_tree();
     Node * curr_scene = scene_tree->get_current_scene();
