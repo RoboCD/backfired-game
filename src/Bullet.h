@@ -24,7 +24,6 @@ protected:
 
 private:
 	float speed = 600.0;
-	Sprite2D *bulletSprite2d = nullptr;
     double rotation{0};
 };
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dqwcjfoviryh5"]
 
-[ext_resource type="Texture2D" uid="uid://c6u5h01ip5nne" path="res://Backfire_Enemy_Sheet.png" id="1_lb3bt"]
+[ext_resource type="Texture2D" uid="uid://c6u5h01ip5nne" path="res://art/Backfire_Enemy_Sheet.png" id="1_lb3bt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k70b7"]
 size = Vector2(40, 64)

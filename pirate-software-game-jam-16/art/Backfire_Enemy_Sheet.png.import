@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bq7iak0tipssy"
-path="res://.godot/imported/Backfire_Background2.png-e4cc328c0ad1165042a31aac1deeb29e.ctex"
+uid="uid://c6u5h01ip5nne"
+path="res://.godot/imported/Backfire_Enemy_Sheet.png-9453ffcdbbd25146873eb49f40e43534.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Backfire_Background2.png"
-dest_files=["res://.godot/imported/Backfire_Background2.png-e4cc328c0ad1165042a31aac1deeb29e.ctex"]
+source_file="res://art/Backfire_Enemy_Sheet.png"
+dest_files=["res://.godot/imported/Backfire_Enemy_Sheet.png-9453ffcdbbd25146873eb49f40e43534.ctex"]
 
 [params]
 

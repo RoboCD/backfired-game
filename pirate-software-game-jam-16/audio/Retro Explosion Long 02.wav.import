@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bgegrx3xqldb4"
-path="res://.godot/imported/Retro Explosion Long 02.wav-44e4968758b3b94483f5df66c6d97192.sample"
+path="res://.godot/imported/Retro Explosion Long 02.wav-d85924a1bc3acff91c71147af36fafec.sample"
 
 [deps]
 
-source_file="res://Retro Explosion Long 02.wav"
-dest_files=["res://.godot/imported/Retro Explosion Long 02.wav-44e4968758b3b94483f5df66c6d97192.sample"]
+source_file="res://audio/Retro Explosion Long 02.wav"
+dest_files=["res://.godot/imported/Retro Explosion Long 02.wav-d85924a1bc3acff91c71147af36fafec.sample"]
 
 [params]
 

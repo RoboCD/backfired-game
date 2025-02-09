@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://g3fhwtthr3k8"
-path="res://.godot/imported/Backfire_wall.png-4f0140c9a68e101fc4c1561915752444.ctex"
+uid="uid://cvt7eppdnhbtf"
+path="res://.godot/imported/Backfire_floor.png-0157367d52a0410bbfb386987aa21659.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Backfire_wall.png"
-dest_files=["res://.godot/imported/Backfire_wall.png-4f0140c9a68e101fc4c1561915752444.ctex"]
+source_file="res://art/Backfire_floor.png"
+dest_files=["res://.godot/imported/Backfire_floor.png-0157367d52a0410bbfb386987aa21659.ctex"]
 
 [params]
 

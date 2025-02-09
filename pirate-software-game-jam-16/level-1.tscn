@@ -1,10 +1,10 @@
 [gd_scene load_steps=13 format=4 uid="uid://rthhnofsnwrd"]
 
 [ext_resource type="PackedScene" uid="uid://bnqsnvkq5q7ct" path="res://player.tscn" id="1_i2b0v"]
-[ext_resource type="Texture2D" uid="uid://cvt7eppdnhbtf" path="res://Backfire_floor.png" id="2_a6oy8"]
+[ext_resource type="Texture2D" uid="uid://cvt7eppdnhbtf" path="res://art/Backfire_floor.png" id="2_a6oy8"]
 [ext_resource type="PackedScene" uid="uid://dqwcjfoviryh5" path="res://enemy.tscn" id="3_8at1y"]
 [ext_resource type="PackedScene" uid="uid://dqkobguoc3kdh" path="res://game_over.tscn" id="3_vnbeu"]
-[ext_resource type="Texture2D" uid="uid://bq7iak0tipssy" path="res://Backfire_Background2.png" id="4_0p2ab"]
+[ext_resource type="Texture2D" uid="uid://bq7iak0tipssy" path="res://art/Backfire_Background2.png" id="4_0p2ab"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_16m47"]
 texture = ExtResource("2_a6oy8")

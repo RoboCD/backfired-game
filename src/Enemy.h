@@ -17,38 +17,16 @@ public:
 	Enemy();
 	~Enemy();
 
-	// void set_speed(float p_speed);
-	// float get_speed() const;
-
-	// void set_gravity(float p_gravity);
-	// float get_gravity() const;
-
-	// void set_texture(const Ref<Texture2D> &p_texture);
-	// Ref<Texture2D> get_texture() const;
-
 	virtual void _physics_process(double p_delta) override;
 
 	void _process(double delta) override;
-
-	// void shoot_beam();
 
 protected:
 	static void _bind_methods();
 
 private:
 	double time_passed;
-
-	// float speed = 600.0;
-
 	double gravity = 980;
-
-	// AnimatedSprite2D *botSprite2d;
-	// Sprite2D *playerSprite2d = nullptr;
-	// Ref<Texture2D> texture;
-    // // CollisionShape2D *botCollisionShape2d;
-    // Ref<PackedScene> bulletScene;
-    // bool oneShot = true;
-
 };
 
 }

@@ -5,20 +5,16 @@
 using namespace godot;
 
 void Enemy::_bind_methods() {
-
 }
 
 Enemy::Enemy(){
 	gravity = ProjectSettings::get_singleton()->get_setting("physics/2d/default_gravity");
-
 }
 
 Enemy::~Enemy(){
-
 }
 
 void Enemy::_process(double delta){
-
 }
 
 void Enemy::_physics_process(double p_delta){

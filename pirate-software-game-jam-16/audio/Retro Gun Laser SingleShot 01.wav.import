@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://c6l6q1lwh7p07"
-path="res://.godot/imported/Retro Gun Laser SingleShot 01.wav-3954fbab0a57fa04977a39c24ab6f0e1.sample"
+path="res://.godot/imported/Retro Gun Laser SingleShot 01.wav-3dc73f81a2b60e9e61cff5673bc56f8d.sample"
 
 [deps]
 
-source_file="res://Retro Gun Laser SingleShot 01.wav"
-dest_files=["res://.godot/imported/Retro Gun Laser SingleShot 01.wav-3954fbab0a57fa04977a39c24ab6f0e1.sample"]
+source_file="res://audio/Retro Gun Laser SingleShot 01.wav"
+dest_files=["res://.godot/imported/Retro Gun Laser SingleShot 01.wav-3dc73f81a2b60e9e61cff5673bc56f8d.sample"]
 
 [params]
 

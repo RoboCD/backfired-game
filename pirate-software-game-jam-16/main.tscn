@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b0ficdbwhm34b"]
 
 [ext_resource type="PackedScene" uid="uid://c5x7wie07uyj5" path="res://main_menu.tscn" id="1_ems2q"]
-[ext_resource type="AudioStream" uid="uid://gdpimv5tmewq" path="res://Retro Explosion Short 01.wav" id="2_uslya"]
+[ext_resource type="AudioStream" uid="uid://gdpimv5tmewq" path="res://audio/Retro Explosion Short 01.wav" id="2_uslya"]
 
 [node name="Main" type="Main"]
 

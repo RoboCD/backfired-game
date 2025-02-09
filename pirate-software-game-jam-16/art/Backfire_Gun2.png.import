@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c68jjryvbmd83"
-path="res://.godot/imported/Backfire_Background.png-8bb78743986ff1f11a65750c9c5f2e7a.ctex"
+uid="uid://b2wh6o23tr5qn"
+path="res://.godot/imported/Backfire_Gun2.png-8cb381e4ebd3c08d2abb1b63d8c19793.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Backfire_Background.png"
-dest_files=["res://.godot/imported/Backfire_Background.png-8bb78743986ff1f11a65750c9c5f2e7a.ctex"]
+source_file="res://art/Backfire_Gun2.png"
+dest_files=["res://.godot/imported/Backfire_Gun2.png-8cb381e4ebd3c08d2abb1b63d8c19793.ctex"]
 
 [params]
 

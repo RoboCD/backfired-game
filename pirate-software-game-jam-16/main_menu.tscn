@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c5x7wie07uyj5"]
 
 [ext_resource type="Theme" uid="uid://bpoxbytxf2skn" path="res://backfired_menu.tres" id="1_gvicu"]
-[ext_resource type="Texture2D" uid="uid://bcokr5874hkfu" path="res://Backfired_Title.png" id="2_842cm"]
+[ext_resource type="Texture2D" uid="uid://bcokr5874hkfu" path="res://art/Backfired_Title.png" id="2_842cm"]
 
 [node name="MainMenu" type="MainMenu"]
 

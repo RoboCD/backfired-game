@@ -57,12 +57,11 @@ private:
 
 	double friction = 10;
 
-	// AnimatedSprite2D *botSprite2d;
 	Sprite2D *playerSprite2d = nullptr;
     VisibleOnScreenNotifier2D* notifier = nullptr;
 	Ref<Texture2D> texture;
-    // CollisionShape2D *botCollisionShape2d;
-    Ref<PackedScene> bulletScene;
+
+	Ref<PackedScene> bulletScene;
     bool oneShot = true;
 	bool dead = false;
 };
