@@ -55,6 +55,7 @@ limit_top = -128
 limit_bottom = 648
 
 [node name="GameOver" parent="Player" instance=ExtResource("3_vnbeu")]
+visible = false
 
 [node name="BackgroundLayer" type="CanvasLayer" parent="."]
 layer = -1

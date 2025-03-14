@@ -10,6 +10,7 @@
 #include "Bullet.h"
 #include "Enemy.h"
 #include "Game_Over.h"
+#include "Win_Screen.h"
 
 using namespace godot;
 
@@ -24,6 +25,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level)
 	GDREGISTER_CLASS(Bullet);
 	GDREGISTER_CLASS(Enemy);
 	GDREGISTER_CLASS(GameOver);
+	GDREGISTER_CLASS(WinScreen);
 }
 
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {

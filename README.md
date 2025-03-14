@@ -18,7 +18,7 @@ Made using Godot 4.3 and GDextension to write the logic in C++.
 All art assets were made using [Aseprite](https://www.aseprite.org/) pixel art editor.
 
 ## Submission
-[Game Jam Page](https://itch.io/jam/pirate)
+[Game Jam Page](https://itch.io/jam/pirate16)
 
 [Itch.io Page](https://robocd.itch.io/backfired)
 
