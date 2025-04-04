@@ -61,6 +61,7 @@ offset_bottom = 720.0
 color = Color(0.281187, 0.281187, 0.281187, 1)
 
 [node name="OptionsButton" type="Button" parent="."]
+visible = false
 top_level = true
 light_mask = 1023
 visibility_layer = 1023
@@ -80,6 +81,7 @@ theme_override_font_sizes/font_size = 50
 text = "Options"
 
 [node name="LeaderBoard" type="Button" parent="."]
+visible = false
 top_level = true
 light_mask = 1023
 visibility_layer = 1023

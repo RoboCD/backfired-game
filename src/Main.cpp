@@ -1,7 +1,8 @@
 #include "Main.h"
+
 #include "Main_Menu.h"
-#include "Game_Over.h"
 #include "Player.h"
+
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
@@ -25,6 +26,9 @@ void Main::_bind_methods() {
 
 Main::Main() {
 	// Initialize any variables here.
+    game_over_screen = ResourceLoader::get_singleton()->load("res://game_over.tscn");
+	win_screen = ResourceLoader::get_singleton()->load("res://win_screen.tscn");
+
 }
 
 Main::~Main() {
@@ -56,10 +60,10 @@ void Main::_process(double delta) {
     if (level_1_scene == nullptr){
         return;
     }
-    if (signals_connected == false)
+    Player * player = level_1_scene->get_node<Player>("Player");
+    if (start_signals_connected == false)
     {
-        UtilityFunctions::print("main connect signals");
-        Player * player = level_1_scene->get_node<Player>("Player");
+        UtilityFunctions::print("start signals connect");
 
         Error error = player->connect("player_died", Callable(this, "game_over"));
         UtilityFunctions::print("main player signal connect");
@@ -67,26 +71,40 @@ void Main::_process(double delta) {
             UtilityFunctions::print(String("Failed to connect signal: ") + error);
         }
         else{
-            signals_connected = true;
+            start_signals_connected = true;
         }
-        GameOver * game_over_node = player->get_node<GameOver>("GameOver");
-        Error error_go = game_over_node->connect("pressed_restart", Callable(this, "restart_game"));
-        UtilityFunctions::print("game over node signal connect");
-        if (error_go != OK) {
-            UtilityFunctions::print(String("Failed to connect signal: ") + error);
-        }
-        else{
-            signals_connected = true;
-        }
-
         Area2D * exit_area = level_1_scene->get_node<Area2D>("Exit");
         Error error_exit = exit_area->connect("body_entered", Callable(this, "game_won"));
         UtilityFunctions::print("game won node signal connect");
         if (error_exit != OK) {
-            UtilityFunctions::print(String("Failed to connect exit area signal: ") + error);
+            UtilityFunctions::print(String("Failed to connect exit area signal: ") + error_exit);
         }
         else{
-            signals_connected = true;
+            start_signals_connected = true;
+        }
+    }
+    if (curr_scene->has_node("./GameOver") && game_over_signal_connect == false){
+
+        GameOver * game_over_node = curr_scene->get_node<GameOver>("GameOver");
+        Error error_go = game_over_node->connect("pressed_restart", Callable(this, "restart_game"));
+        UtilityFunctions::print("game over node signal connect");
+        if (error_go != OK) {
+            UtilityFunctions::print(String("Failed to connect signal: ") + error_go);
+        }
+        else{
+            game_over_signal_connect = true;
+        }
+    }
+    if (curr_scene->has_node("./WinScreen") && win_screen_signal_connect == false){
+
+        WinScreen * win_screen_node = curr_scene->get_node<WinScreen>("WinScreen");
+        Error error_win = win_screen_node->connect("main_menu_new_game", Callable(this, "restart_game"));
+        UtilityFunctions::print("game won node signal connect");
+        if (error_win != OK) {
+            UtilityFunctions::print(String("Failed to connect signal: ") + error_win);
+        }
+        else{
+            win_screen_signal_connect = true;
         }
     }
 }
@@ -108,17 +126,27 @@ void Main::start_game(){
 
 void Main::game_over(Node* p_node){
     UtilityFunctions::print("Game Over!");
-    p_node->get_node<GameOver>("GameOver")->show();
+	Node* game_over_instance = game_over_screen->instantiate();
+    SceneTree* scene_tree = get_tree();
+
+    GameOver* game_over_node = game_over_instance->get_node<GameOver>(".");
+
+    scene_tree->get_current_scene()->add_child(game_over_instance);
+    game_over_node->show();
+
+    // p_node->get_node<GameOver>("GameOver")->show();
 }
 
 void Main::restart_game(){
+    UtilityFunctions::print("Restart Game");
     SceneTree* scene_tree = get_tree();
     Node * curr_scene = scene_tree->get_current_scene();
 
     CanvasLayer* level_1_node = curr_scene->get_node<CanvasLayer>("Level-1_"+String::num(numTries));
-    level_1_node->get_node<Player>("Player")->get_node<GameOver>("GameOver")->hide();
     level_1_node->queue_free();
-    signals_connected = false;
+    curr_scene->get_node<GameOver>("GameOver")->queue_free();
+    start_signals_connected = false;
+    game_over_signal_connect = false;
     numTries++;
 
     start_game();
@@ -130,18 +158,31 @@ void Main::game_won(Node* p_node){
     if (node_name != "Player"){
         return;
     }
-    UtilityFunctions::print("You Won!");
-    SceneTree* scene_tree = get_tree();
-    Node * curr_scene = scene_tree->get_current_scene();
-    CanvasLayer* level_1_node = curr_scene->get_node<CanvasLayer>("Level-1_"+String::num(numTries));
-    Player* player_node = level_1_node->get_node<Player>("Player");
-    GameOver* end_screen = player_node->get_node<GameOver>("GameOver");
+    Player *player_node = Object::cast_to<Player>(p_node);
 
-    // Change message
-    end_screen->set_message("You Escaped!");
-    end_screen->set_deaths(numTries);
-    end_screen->get_node<Button>("RestartButton")->hide();
-    end_screen->show();
+    UtilityFunctions::print("You Won!");
+    Node* win_screen_instance = win_screen->instantiate();
+    SceneTree* scene_tree = get_tree();
+
+    WinScreen* win_screen_node = win_screen_instance->get_node<WinScreen>(".");
+
+    scene_tree->get_current_scene()->add_child(win_screen_instance);
+    win_screen_node->show();
     player_node->set_velocity(Vector2(0,0));
     player_node->set_dead(true);
+
+    // SceneTree* scene_tree = get_tree();
+    // Node * curr_scene = scene_tree->get_current_scene();
+    // CanvasLayer* level_1_node = curr_scene->get_node<CanvasLayer>("Level-1_"+String::num(numTries));
+    // Player* player_node = level_1_node->get_node<Player>("Player");
+
+    // WinScreen* end_screen = player_node->get_node<GameOver>("GameOver");
+
+    // Change message
+    // end_screen->set_message("You Escaped!");
+    // end_screen->set_deaths(numTries);
+    // end_screen->get_node<Button>("RestartButton")->hide();
+    // end_screen->show();
+    // player_node->set_velocity(Vector2(0,0));
+    // player_node->set_dead(true);
 }

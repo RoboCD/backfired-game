@@ -3,8 +3,8 @@
 using namespace godot;
 
 void WinScreen::_bind_methods() {
-    // Start button signal
-	ADD_SIGNAL(MethodInfo("pressed_restart"));
+    // Main Menu button signal
+	ADD_SIGNAL(MethodInfo("main_menu_new_game"));
 }
 
 WinScreen::WinScreen() {
