@@ -39,6 +39,12 @@ void WinScreen::set_deaths(int deaths){
     death_label->show();
 }
 
+void WinScreen::set_kills(int kills){
+    Label* kills_label = get_node<Label>("Kills");
+    kills_label->set_text(String("Kills: " +String::num(kills)));
+    kills_label->show();
+}
+
 void WinScreen::on_main_menu_button_pressed(){
     UtilityFunctions::print("Main Menu Button Pressed!");
     SceneTree* scene_tree = get_tree();

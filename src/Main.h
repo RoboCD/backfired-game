@@ -29,6 +29,7 @@ public:
 
     void main_menu();
 
+    void incrementEnemiesKilled();
 protected:
 	static void _bind_methods();
 
@@ -37,7 +38,11 @@ private:
     bool game_over_signal_connect{false};
     bool win_screen_signal_connect{false};
 
-    int numTries{0};
+    int numDeaths;
+    int numGames;
+    int numEnemiesKilled;
+
+    String level1NodeName;
 
     Ref<PackedScene> game_over_screen;
     Ref<PackedScene> win_screen;

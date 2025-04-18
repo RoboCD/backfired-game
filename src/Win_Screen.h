@@ -20,6 +20,8 @@ public:
 
     void set_deaths(int deaths);
 
+    void set_kills(int kills);
+
     void on_main_menu_button_pressed();
 protected:
     static void _bind_methods();

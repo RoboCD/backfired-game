@@ -23,9 +23,15 @@ void Main::_bind_methods() {
     ClassDB::bind_method(D_METHOD("restart_game"), &Main::restart_game);
     ClassDB::bind_method(D_METHOD("game_won", "p_node"), &Main::game_won);
     ClassDB::bind_method(D_METHOD("main_menu"), &Main::main_menu);
+    ClassDB::bind_method(D_METHOD("incrementEnemiesKilled"), &Main::incrementEnemiesKilled);
 }
 
-Main::Main() {
+
+Main::Main():
+    numDeaths(0),
+    numGames(0),
+    numEnemiesKilled(0),
+    level1NodeName("Level-1_"+String::num(numGames)+"_"+String::num(numDeaths)) {
 	// Initialize any variables here.
     game_over_screen = ResourceLoader::get_singleton()->load("res://game_over.tscn");
 	win_screen = ResourceLoader::get_singleton()->load("res://win_screen.tscn");
@@ -56,7 +62,7 @@ void Main::_process(double delta) {
 
     Node * curr_scene = scene_tree->get_current_scene();
 
-    Node* level_1_scene = get_node_or_null(NodePath(String("Level-1_"+String::num(numTries))));
+    Node* level_1_scene = get_node_or_null(NodePath(level1NodeName));
 
     if (level_1_scene == nullptr){
         return;
@@ -82,6 +88,15 @@ void Main::_process(double delta) {
         }
         else{
             start_signals_connected = true;
+        }
+        // Enemies death signal
+        TypedArray<Node> enemies = level_1_scene->get_children();
+        for (int i = 0; i < enemies.size(); i++){
+            Node* enemy = Object::cast_to<Node>(enemies[i]);
+            if (enemy && enemy->has_signal("enemy_hit")){
+                UtilityFunctions::print(String("Enemy hit signal connect: ") + String::num(i));
+                enemy->connect("enemy_hit", Callable(this,"incrementEnemiesKilled"));
+            }
         }
     }
     if (curr_scene->has_node("./GameOver") && game_over_signal_connect == false){
@@ -119,7 +134,8 @@ void Main::start_game(){
 
     Node* level_1_inst = level1Scene->instantiate();
     CanvasLayer* level_1_node = level_1_inst->get_node<CanvasLayer>(".");
-    level_1_node->set_name("Level-1_"+String::num(numTries));
+    level1NodeName = "Level-1_"+String::num(numGames)+"_"+String::num(numDeaths);
+    level_1_node->set_name(level1NodeName);
     curr_scene->add_child(level_1_node);
     MainMenu* main_menu = curr_scene->get_node<MainMenu>("MainMenu");
     main_menu->hide();
@@ -143,12 +159,12 @@ void Main::restart_game(){
     SceneTree* scene_tree = get_tree();
     Node * curr_scene = scene_tree->get_current_scene();
 
-    CanvasLayer* level_1_node = curr_scene->get_node<CanvasLayer>("Level-1_"+String::num(numTries));
+    CanvasLayer* level_1_node = curr_scene->get_node<CanvasLayer>(level1NodeName);
     level_1_node->queue_free();
     curr_scene->get_node<GameOver>("GameOver")->queue_free();
     start_signals_connected = false;
     game_over_signal_connect = false;
-    numTries++;
+    numDeaths++;
 
     start_game();
 }
@@ -172,20 +188,10 @@ void Main::game_won(Node* p_node){
     player_node->set_velocity(Vector2(0,0));
     player_node->set_dead(true);
 
-    // SceneTree* scene_tree = get_tree();
-    // Node * curr_scene = scene_tree->get_current_scene();
-    // CanvasLayer* level_1_node = curr_scene->get_node<CanvasLayer>("Level-1_"+String::num(numTries));
-    // Player* player_node = level_1_node->get_node<Player>("Player");
+    win_screen_node->set_deaths(numDeaths);
+    win_screen_node->set_kills(numEnemiesKilled);
 
-    // WinScreen* end_screen = player_node->get_node<GameOver>("GameOver");
-
-    // Change message
-    // end_screen->set_message("You Escaped!");
-    // end_screen->set_deaths(numTries);
-    // end_screen->get_node<Button>("RestartButton")->hide();
-    // end_screen->show();
-    // player_node->set_velocity(Vector2(0,0));
-    // player_node->set_dead(true);
+    // TODO: Pause all bullets in the scene, possibly including animation?
 }
 
 void Main::main_menu(){
@@ -193,7 +199,7 @@ void Main::main_menu(){
     SceneTree* scene_tree = get_tree();
     Node * curr_scene = scene_tree->get_current_scene();
 
-    CanvasLayer* level_1_node = curr_scene->get_node<CanvasLayer>("Level-1_"+String::num(numTries));
+    CanvasLayer* level_1_node = curr_scene->get_node<CanvasLayer>(level1NodeName);
     level_1_node->queue_free();
     TypedArray<Node> children = curr_scene->get_children();
     for (int i = 0; i< children.size(); i++){
@@ -203,14 +209,21 @@ void Main::main_menu(){
         }
 
     }
-    // curr_scene->get_node<WinScreen>("GameOver")->queue_free();
+    // Reset signals and numbers tracked
     start_signals_connected = false;
     game_over_signal_connect = false;
     win_screen_signal_connect = false;
-    numTries++;
+
+    numGames++;
+    numDeaths = 0;
+    numEnemiesKilled = 0;
 
     // start_game();
     MainMenu* main_menu = curr_scene->get_node<MainMenu>("MainMenu");
     main_menu->show();
 }
 
+void Main::incrementEnemiesKilled(){
+    numEnemiesKilled++;
+    UtilityFunctions::print(String("Current Enemies killed: ") + String::num(numEnemiesKilled));
+}

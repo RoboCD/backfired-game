@@ -1,5 +1,6 @@
 
 #include "Bullet.h"
+#include "Enemy.h"
 
 #include <godot_cpp/classes/kinematic_collision2d.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
@@ -37,8 +38,8 @@ void Bullet::_physics_process(double delta){
         UtilityFunctions::print("Hit ", collision_class);
         if(collision_class == "Enemy"){
             Object * collider = collision->get_collider();
-            Node * collider_node = Object::cast_to<Node>(collider);
-            collider_node->queue_free();
+            Enemy * collider_node = Object::cast_to<Enemy>(collider);
+            collider_node->die();
             get_parent()->get_node<AudioStreamPlayer>("Enemy Hit")->play();
         }
         hide();
