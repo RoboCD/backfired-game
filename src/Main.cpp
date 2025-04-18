@@ -22,6 +22,7 @@ void Main::_bind_methods() {
     ClassDB::bind_method(D_METHOD("game_over", "p_node"), &Main::game_over);
     ClassDB::bind_method(D_METHOD("restart_game"), &Main::restart_game);
     ClassDB::bind_method(D_METHOD("game_won", "p_node"), &Main::game_won);
+    ClassDB::bind_method(D_METHOD("main_menu"), &Main::main_menu);
 }
 
 Main::Main() {
@@ -98,8 +99,8 @@ void Main::_process(double delta) {
     if (curr_scene->has_node("./WinScreen") && win_screen_signal_connect == false){
 
         WinScreen * win_screen_node = curr_scene->get_node<WinScreen>("WinScreen");
-        Error error_win = win_screen_node->connect("main_menu_new_game", Callable(this, "restart_game"));
-        UtilityFunctions::print("game won node signal connect");
+        Error error_win = win_screen_node->connect("main_menu_new_game", Callable(this, "main_menu"));
+        UtilityFunctions::print("main menu new game signal connect");
         if (error_win != OK) {
             UtilityFunctions::print(String("Failed to connect signal: ") + error_win);
         }
@@ -186,3 +187,30 @@ void Main::game_won(Node* p_node){
     // player_node->set_velocity(Vector2(0,0));
     // player_node->set_dead(true);
 }
+
+void Main::main_menu(){
+    UtilityFunctions::print("Back to Main Menu");
+    SceneTree* scene_tree = get_tree();
+    Node * curr_scene = scene_tree->get_current_scene();
+
+    CanvasLayer* level_1_node = curr_scene->get_node<CanvasLayer>("Level-1_"+String::num(numTries));
+    level_1_node->queue_free();
+    TypedArray<Node> children = curr_scene->get_children();
+    for (int i = 0; i< children.size(); i++){
+        Node* child = Object::cast_to<Node>(children[i]);
+        if (child->get_class() == "WinScreen"){
+            child->queue_free();
+        }
+
+    }
+    // curr_scene->get_node<WinScreen>("GameOver")->queue_free();
+    start_signals_connected = false;
+    game_over_signal_connect = false;
+    win_screen_signal_connect = false;
+    numTries++;
+
+    // start_game();
+    MainMenu* main_menu = curr_scene->get_node<MainMenu>("MainMenu");
+    main_menu->show();
+}
+

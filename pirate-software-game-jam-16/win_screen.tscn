@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cb7ewg3rttbg5"]
 
 [node name="WinScreen" type="WinScreen"]
+visible = false
 
 [node name="WinMessage" type="Label" parent="."]
 texture_filter = 1

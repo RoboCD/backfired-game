@@ -27,6 +27,8 @@ public:
 
     void game_won(Node* p_node);
 
+    void main_menu();
+
 protected:
 	static void _bind_methods();
 
