@@ -40,6 +40,8 @@ public:
 
     void set_dead(bool p_dead);
 
+	void pause_all_animations(bool p_pause);
+
 protected:
 	static void _bind_methods();
 

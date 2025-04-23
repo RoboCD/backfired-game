@@ -29,7 +29,8 @@ public:
 
     void main_menu();
 
-    void incrementEnemiesKilled();
+    void enemy_killed();
+
 protected:
 	static void _bind_methods();
 
@@ -42,7 +43,7 @@ private:
     int numGames;
     int numEnemiesKilled;
 
-    String level1NodeName;
+    String level_1_node_name;
 
     Ref<PackedScene> game_over_screen;
     Ref<PackedScene> win_screen;
