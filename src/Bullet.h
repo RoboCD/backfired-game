@@ -19,12 +19,15 @@ public:
 	void set_speed(float p_speed);
 	float get_speed() const;
 
+	void pause_animation(bool pause);
+
 protected:
 	static void _bind_methods();
 
 private:
 	float speed = 600.0;
     double rotation{0};
+	bool paused{false};
 };
 
 }

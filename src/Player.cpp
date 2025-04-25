@@ -175,8 +175,7 @@ void Player::shoot_beam(){
 	double muzzleRotation = muzzle->get_global_rotation_degrees();
 	UtilityFunctions::print("Muzzle position: ", String(muzzlePosition), "Rotation: ", muzzleRotation);
 
-	scene_tree->get_current_scene()->add_child(bullet_instance);
-
+	add_child(bullet_instance);
 	bulletNode->start(muzzlePosition, muzzleRotation);
 
 	// Play sound
@@ -201,7 +200,7 @@ Vector2 Player::add_friction(Vector2 velcoity){
 void Player::die(){
 	if (!dead){
 		UtilityFunctions::print("Player died");
-		dead = true;
+		set_dead(true);
 		emit_signal("player_died",this);
 
 		hide();
@@ -211,4 +210,15 @@ void Player::die(){
 
 void Player::set_dead(bool p_dead){
 	dead = p_dead;
+}
+
+
+void Player::pause_all_animations(bool p_pause){
+    TypedArray<Node> node_list = get_children();
+    for (int i = 0; i < node_list.size(); i++){
+        Bullet* bullet = Object::cast_to<Bullet>(node_list[i]);
+        if (bullet){
+            bullet->pause_animation(true);
+        }
+     }
 }

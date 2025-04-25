@@ -1,11 +1,11 @@
 
 #include "Bullet.h"
+#include "Enemy.h"
 
 #include <godot_cpp/classes/kinematic_collision2d.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/collision_shape2d.hpp>
 #include <godot_cpp/classes/engine.hpp>
-#include <godot_cpp/classes/audio_stream_player.hpp>
 
 using namespace godot;
 
@@ -28,6 +28,9 @@ Bullet::~Bullet() {
 
 void Bullet::_physics_process(double delta){
     if (Engine::get_singleton()->is_editor_hint()) return; // Early return if we are in editor
+    if(paused){
+        return;
+    }
     Vector2 velocity;
     Ref<KinematicCollision2D> collision = move_and_collide( Vector2(speed,0).rotated(rotation) * delta);
     if(!collision.is_null()){
@@ -37,9 +40,8 @@ void Bullet::_physics_process(double delta){
         UtilityFunctions::print("Hit ", collision_class);
         if(collision_class == "Enemy"){
             Object * collider = collision->get_collider();
-            Node * collider_node = Object::cast_to<Node>(collider);
-            collider_node->queue_free();
-            get_parent()->get_node<AudioStreamPlayer>("Enemy Hit")->play();
+            Enemy * collider_node = Object::cast_to<Enemy>(collider);
+            collider_node->die();
         }
         hide();
         call_deferred("queue_free");
@@ -62,4 +64,17 @@ void Bullet::set_speed(float p_speed) {
 
 float Bullet::get_speed() const {
 	return speed;
+}
+
+void Bullet::pause_animation(bool p_pause){
+    AnimatedSprite2D* animation = get_node<AnimatedSprite2D>("AnimatedSprite2D");
+    if (p_pause){
+        // Stop animation
+        animation->pause();
+    }
+    else{
+        // Restart Animation
+        animation->play();
+    }
+    paused = p_pause;
 }

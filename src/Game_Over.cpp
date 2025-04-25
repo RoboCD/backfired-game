@@ -3,7 +3,6 @@
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/sprite2d.hpp>
-#include <godot_cpp/classes/packed_scene.hpp>
 
 #include <gdextension_interface.h>
 #include <godot_cpp/classes/resource.hpp>

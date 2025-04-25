@@ -1,6 +1,9 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include "Game_Over.h"
+#include "Win_Screen.h"
+
 #include <godot_cpp/classes/node.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
 
@@ -24,13 +27,26 @@ public:
 
     void game_won(Node* p_node);
 
+    void main_menu();
+
+    void enemy_killed();
+
 protected:
 	static void _bind_methods();
 
 private:
-    bool signals_connected{false};
+    bool start_signals_connected{false};
+    bool game_over_signal_connect{false};
+    bool win_screen_signal_connect{false};
 
-    int numTries{0};
+    int numDeaths;
+    int numGames;
+    int numEnemiesKilled;
+
+    String level_1_node_name;
+
+    Ref<PackedScene> game_over_screen;
+    Ref<PackedScene> win_screen;
 };
 
 }

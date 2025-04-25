@@ -21,6 +21,7 @@ public:
 
 	void _process(double delta) override;
 
+	void die();
 protected:
 	static void _bind_methods();
 

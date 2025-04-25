@@ -1,0 +1,69 @@
+[gd_scene load_steps=2 format=3 uid="uid://cb7ewg3rttbg5"]
+
+[ext_resource type="Theme" uid="uid://bpoxbytxf2skn" path="res://backfired_menu.tres" id="1_0qfqm"]
+
+[node name="WinScreen" type="WinScreen"]
+visible = false
+
+[node name="WinMessage" type="Label" parent="."]
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -51.0
+offset_top = -11.5
+offset_right = 51.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 90
+text = "You Escaped!"
+
+[node name="Deaths" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -284.0
+offset_top = -273.0
+offset_right = -100.0
+offset_bottom = -204.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "Deaths:"
+
+[node name="MainButton" type="Button" parent="."]
+texture_filter = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -168.0
+offset_top = -167.0
+offset_right = 168.0
+offset_bottom = -66.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("1_0qfqm")
+theme_override_font_sizes/font_size = 50
+text = "Main Menu"
+
+[node name="Kills" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 121.0
+offset_top = -273.0
+offset_right = 281.0
+offset_bottom = -204.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "Kills:"

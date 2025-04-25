@@ -9,6 +9,7 @@
 top_level = true
 light_mask = 1023
 visibility_layer = 1023
+texture_filter = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -58,3 +59,43 @@ offset_left = 1.0
 offset_right = 1282.0
 offset_bottom = 720.0
 color = Color(0.281187, 0.281187, 0.281187, 1)
+
+[node name="OptionsButton" type="Button" parent="."]
+visible = false
+top_level = true
+light_mask = 1023
+visibility_layer = 1023
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -364.0
+offset_top = -196.0
+offset_right = -164.0
+offset_bottom = -96.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("1_gvicu")
+theme_override_font_sizes/font_size = 50
+text = "Options"
+
+[node name="LeaderBoard" type="Button" parent="."]
+visible = false
+top_level = true
+light_mask = 1023
+visibility_layer = 1023
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 143.0
+offset_top = -199.0
+offset_right = 453.0
+offset_bottom = -99.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("1_gvicu")
+theme_override_font_sizes/font_size = 50
+text = "Leaderboard"
