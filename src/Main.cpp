@@ -36,7 +36,6 @@ Main::Main():
     numGames(0),
     numEnemiesKilled(0),
     level_1_node_name("Level-1_"+String::num(numGames)+"_"+String::num(numDeaths)),
-    runTime_ten_s(0),
     runTime_s(0),
     runTime_m(0)
 {
@@ -177,6 +176,10 @@ void Main::game_over(Node* p_node){
     Player * player = level_1_scene->get_node<Player>("Player");
     // Pause all bullet instances
     player->pause_all_animations(true);
+
+    // Pause Timer
+    Timer * runTimer = level_1_scene->get_node<Timer>("RunTimer");
+    runTimer->set_paused(true);
 }
 
 void Main::restart_game(){
@@ -191,6 +194,8 @@ void Main::restart_game(){
     game_over_signal_connect = false;
     numDeaths++;
     numEnemiesKilled = 0;
+    runTime_s = 0;
+    runTime_m = 0;
 
     start_game();
 }
@@ -211,13 +216,19 @@ void Main::game_won(Node* p_node){
 
     scene_tree->get_current_scene()->add_child(win_screen_instance);
     win_screen_node->show();
+
+    // Pause Timer
+    CanvasLayer* level_1_node = scene_tree->get_current_scene()->get_node<CanvasLayer>(level_1_node_name);
+    Timer * runTimer = level_1_node->get_node<Timer>("RunTimer");
+    runTimer->set_paused(true);
+
     player_node->set_velocity(Vector2(0,0));
     player_node->set_dead(true);
     player_node->pause_all_animations(true);
 
     win_screen_node->set_deaths(numDeaths);
     win_screen_node->set_kills(numEnemiesKilled);
-
+    win_screen_node->set_time(getTimeString());
 }
 
 void Main::main_menu(){
@@ -243,6 +254,8 @@ void Main::main_menu(){
     numGames++;
     numDeaths = 0;
     numEnemiesKilled = 0;
+    runTime_s = 0;
+    runTime_m = 0;
 
     // start_game();
     MainMenu* main_menu = curr_scene->get_node<MainMenu>("MainMenu");
@@ -256,16 +269,17 @@ void Main::enemy_killed(){
 }
 
 void Main::game_timer(){
-    runTime_ten_s++;
-    if (runTime_ten_s > 9){
-        runTime_s++;
-        runTime_ten_s = 0;
-    }
+    runTime_s+=.1;
+
+    // Rollover minutes
     if (runTime_s > 59){
         runTime_m++;
         runTime_s = 0;
     }
-    UtilityFunctions::print(String("Time: ") + String::num(runTime_m) + String(":")
-                                             + String::num(runTime_s) + String(".")
-                                             + String::num(runTime_ten_s));
+    UtilityFunctions::print(String("Time: ") + getTimeString());
+}
+
+String Main::getTimeString(){
+    return String::num(runTime_m).pad_zeros(2) +
+           String(":") + String::num_real(runTime_s, 1).pad_zeros(2).pad_decimals(1);
 }

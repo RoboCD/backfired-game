@@ -45,6 +45,12 @@ void WinScreen::set_kills(int kills){
     kills_label->show();
 }
 
+void WinScreen::set_time(String timeString){
+    Label* time_label = get_node<Label>("Time");
+    time_label->set_text(String("Time: " + timeString));
+    time_label->show();
+}
+
 void WinScreen::on_main_menu_button_pressed(){
     UtilityFunctions::print("Main Menu Button Pressed!");
     SceneTree* scene_tree = get_tree();

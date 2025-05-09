@@ -37,6 +37,7 @@ protected:
 	static void _bind_methods();
 
 private:
+    String getTimeString();
     bool start_signals_connected{false};
     bool game_over_signal_connect{false};
     bool win_screen_signal_connect{false};
@@ -44,8 +45,7 @@ private:
     int numDeaths;
     int numGames;
     int numEnemiesKilled;
-    int runTime_ten_s;
-    int runTime_s;
+    double runTime_s;
     int runTime_m;
 
     String level_1_node_name;
