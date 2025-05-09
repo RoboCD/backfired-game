@@ -6,6 +6,7 @@
 
 #include <godot_cpp/classes/node.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
+#include <godot_cpp/classes/time.hpp>
 
 namespace godot {
 
@@ -31,6 +32,7 @@ public:
 
     void enemy_killed();
 
+    void game_timer();
 protected:
 	static void _bind_methods();
 
@@ -42,6 +44,9 @@ private:
     int numDeaths;
     int numGames;
     int numEnemiesKilled;
+    int runTime_ten_s;
+    int runTime_s;
+    int runTime_m;
 
     String level_1_node_name;
 

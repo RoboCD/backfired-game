@@ -191,3 +191,7 @@ velocity = Vector2(0, 2.81165e+07)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exit"]
 position = Vector2(7483.5, 96)
 shape = SubResource("RectangleShape2D_r4lar")
+
+[node name="RunTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true

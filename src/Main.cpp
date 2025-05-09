@@ -9,6 +9,7 @@
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/sprite2d.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
+#include <godot_cpp/classes/timer.hpp>
 
 #include <gdextension_interface.h>
 #include <godot_cpp/classes/resource.hpp>
@@ -26,14 +27,19 @@ void Main::_bind_methods() {
     ClassDB::bind_method(D_METHOD("game_won", "p_node"), &Main::game_won);
     ClassDB::bind_method(D_METHOD("main_menu"), &Main::main_menu);
     ClassDB::bind_method(D_METHOD("enemy_killed"), &Main::enemy_killed);
-}
+    ClassDB::bind_method(D_METHOD("game_timer"), &Main::game_timer);
 
+}
 
 Main::Main():
     numDeaths(0),
     numGames(0),
     numEnemiesKilled(0),
-    level_1_node_name("Level-1_"+String::num(numGames)+"_"+String::num(numDeaths)) {
+    level_1_node_name("Level-1_"+String::num(numGames)+"_"+String::num(numDeaths)),
+    runTime_ten_s(0),
+    runTime_s(0),
+    runTime_m(0)
+{
 	// Initialize any variables here.
     game_over_screen = ResourceLoader::get_singleton()->load("res://game_over.tscn");
 	win_screen = ResourceLoader::get_singleton()->load("res://win_screen.tscn");
@@ -97,8 +103,19 @@ void Main::_process(double delta) {
             Node* enemy = Object::cast_to<Node>(enemies[i]);
             if (enemy && enemy->has_signal("enemy_hit")){
                 UtilityFunctions::print(String("Enemy hit signal connect: ") + String::num(i));
-                enemy->connect("enemy_hit", Callable(this,"enemy_killed"));
+                enemy->connect("enemy_hit", Callable(this, "enemy_killed"));
             }
+        }
+
+        // Timer signal connect
+        Timer* timer = level_1_scene->get_node<Timer>("RunTimer");
+        Error error_timer = timer->connect("timeout", Callable(this, "game_timer"));
+        UtilityFunctions::print("game timer node signal connect");
+        if (error_timer != OK) {
+            UtilityFunctions::print(String("Failed to connect game timer signal: ") + error_timer);
+        }
+        else{
+            start_signals_connected = true;
         }
     }
     if (curr_scene->has_node("./GameOver") && game_over_signal_connect == false){
@@ -236,4 +253,19 @@ void Main::enemy_killed(){
     numEnemiesKilled++;
     UtilityFunctions::print(String("Current Enemies killed: ") + String::num(numEnemiesKilled));
     get_node<AudioStreamPlayer>("Enemy Hit")->play();
+}
+
+void Main::game_timer(){
+    runTime_ten_s++;
+    if (runTime_ten_s > 9){
+        runTime_s++;
+        runTime_ten_s = 0;
+    }
+    if (runTime_s > 59){
+        runTime_m++;
+        runTime_s = 0;
+    }
+    UtilityFunctions::print(String("Time: ") + String::num(runTime_m) + String(":")
+                                             + String::num(runTime_s) + String(".")
+                                             + String::num(runTime_ten_s));
 }
