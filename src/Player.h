@@ -9,6 +9,7 @@
 #include <godot_cpp/classes/texture_rect.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
 #include <godot_cpp/classes/visible_on_screen_notifier2d.hpp>
+#include <godot_cpp/classes/label.hpp>
 
 namespace godot {
 
@@ -42,6 +43,7 @@ public:
 
 	void pause_all_animations(bool p_pause);
 
+	void set_hud_timer(String time);
 protected:
 	static void _bind_methods();
 
@@ -66,6 +68,7 @@ private:
 	Ref<PackedScene> bulletScene;
     bool oneShot = true;
 	bool dead = false;
+	Label* timer = nullptr;
 };
 
 }

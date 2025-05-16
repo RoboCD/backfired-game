@@ -1,4 +1,6 @@
 #include "Player.h"
+#include "Bullet.h"
+
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/engine.hpp>
@@ -9,8 +11,8 @@
 #include <godot_cpp/classes/marker2d.hpp>
 #include <godot_cpp/classes/audio_stream_player.hpp>
 #include <godot_cpp/classes/viewport.hpp>
-
-#include "Bullet.h"
+#include <godot_cpp/classes/canvas_layer.hpp>
+#include <godot_cpp/classes/camera2d.hpp>
 
 using namespace godot;
 
@@ -53,6 +55,8 @@ Player::Player() {
 	playerSprite2d->set_texture(texture);
 
 	bulletScene = ResourceLoader::get_singleton()->load("res://bullet.tscn");
+
+
 }
 
 Player::~Player() {
@@ -62,6 +66,9 @@ Player::~Player() {
 void Player::_ready(){
 	show();
 	dead = false;
+	Camera2D* cam = get_node<Camera2D>("PlayerCam");
+	CanvasLayer* hud = cam->get_node<CanvasLayer>("HUD");
+	timer = hud->get_node<Label>("Timer");
 }
 
 void Player::set_speed(float p_speed) {
@@ -221,4 +228,12 @@ void Player::pause_all_animations(bool p_pause){
             bullet->pause_animation(true);
         }
      }
+}
+
+void Player::set_hud_timer(String time){
+
+	// Camera2D* cam = get_node<Camera2D>("PlayerCam");
+	// CanvasLayer* hud = cam->get_node<CanvasLayer>("HUD");
+	// Label* timer = hud->get_node<Label>("Timer");
+	timer->set_text(time);
 }

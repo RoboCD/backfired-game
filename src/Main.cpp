@@ -257,7 +257,6 @@ void Main::main_menu(){
     runTime_s = 0;
     runTime_m = 0;
 
-    // start_game();
     MainMenu* main_menu = curr_scene->get_node<MainMenu>("MainMenu");
     main_menu->show();
 }
@@ -276,7 +275,15 @@ void Main::game_timer(){
         runTime_m++;
         runTime_s = 0;
     }
-    UtilityFunctions::print(String("Time: ") + getTimeString());
+    String curTime = getTimeString();
+    UtilityFunctions::print(String("Time: ") + curTime);
+
+    Node* level_1_scene = get_node_or_null(NodePath(level_1_node_name));
+    if (level_1_scene == nullptr){
+        return;
+    }
+    Player * player = level_1_scene->get_node<Player>("Player");
+    player->set_hud_timer(curTime);
 }
 
 String Main::getTimeString(){
