@@ -9,6 +9,7 @@
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/sprite2d.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
+#include <godot_cpp/classes/timer.hpp>
 
 #include <gdextension_interface.h>
 #include <godot_cpp/classes/resource.hpp>
@@ -16,6 +17,7 @@
 #include <godot_cpp/classes/scene_tree.hpp>
 #include <godot_cpp/classes/area2d.hpp>
 #include <godot_cpp/classes/audio_stream_player.hpp>
+#include <godot_cpp/classes/camera2d.hpp>
 
 using namespace godot;
 
@@ -26,14 +28,18 @@ void Main::_bind_methods() {
     ClassDB::bind_method(D_METHOD("game_won", "p_node"), &Main::game_won);
     ClassDB::bind_method(D_METHOD("main_menu"), &Main::main_menu);
     ClassDB::bind_method(D_METHOD("enemy_killed"), &Main::enemy_killed);
-}
+    ClassDB::bind_method(D_METHOD("game_timer"), &Main::game_timer);
 
+}
 
 Main::Main():
     numDeaths(0),
     numGames(0),
     numEnemiesKilled(0),
-    level_1_node_name("Level-1_"+String::num(numGames)+"_"+String::num(numDeaths)) {
+    level_1_node_name("Level-1_"+String::num(numGames)+"_"+String::num(numDeaths)),
+    runTime_s(0),
+    runTime_m(0)
+{
 	// Initialize any variables here.
     game_over_screen = ResourceLoader::get_singleton()->load("res://game_over.tscn");
 	win_screen = ResourceLoader::get_singleton()->load("res://win_screen.tscn");
@@ -97,8 +103,19 @@ void Main::_process(double delta) {
             Node* enemy = Object::cast_to<Node>(enemies[i]);
             if (enemy && enemy->has_signal("enemy_hit")){
                 UtilityFunctions::print(String("Enemy hit signal connect: ") + String::num(i));
-                enemy->connect("enemy_hit", Callable(this,"enemy_killed"));
+                enemy->connect("enemy_hit", Callable(this, "enemy_killed"));
             }
+        }
+
+        // Timer signal connect
+        Timer* timer = level_1_scene->get_node<Timer>("RunTimer");
+        Error error_timer = timer->connect("timeout", Callable(this, "game_timer"));
+        UtilityFunctions::print("game timer node signal connect");
+        if (error_timer != OK) {
+            UtilityFunctions::print(String("Failed to connect game timer signal: ") + error_timer);
+        }
+        else{
+            start_signals_connected = true;
         }
     }
     if (curr_scene->has_node("./GameOver") && game_over_signal_connect == false){
@@ -160,6 +177,10 @@ void Main::game_over(Node* p_node){
     Player * player = level_1_scene->get_node<Player>("Player");
     // Pause all bullet instances
     player->pause_all_animations(true);
+
+    // Pause Timer
+    Timer * runTimer = level_1_scene->get_node<Timer>("RunTimer");
+    runTimer->set_paused(true);
 }
 
 void Main::restart_game(){
@@ -174,6 +195,8 @@ void Main::restart_game(){
     game_over_signal_connect = false;
     numDeaths++;
     numEnemiesKilled = 0;
+    runTime_s = 0;
+    runTime_m = 0;
 
     start_game();
 }
@@ -194,13 +217,19 @@ void Main::game_won(Node* p_node){
 
     scene_tree->get_current_scene()->add_child(win_screen_instance);
     win_screen_node->show();
+
+    // Pause Timer
+    CanvasLayer* level_1_node = scene_tree->get_current_scene()->get_node<CanvasLayer>(level_1_node_name);
+    Timer * runTimer = level_1_node->get_node<Timer>("RunTimer");
+    runTimer->set_paused(true);
+
     player_node->set_velocity(Vector2(0,0));
     player_node->set_dead(true);
     player_node->pause_all_animations(true);
 
     win_screen_node->set_deaths(numDeaths);
     win_screen_node->set_kills(numEnemiesKilled);
-
+    win_screen_node->set_time(getTimeString());
 }
 
 void Main::main_menu(){
@@ -226,8 +255,9 @@ void Main::main_menu(){
     numGames++;
     numDeaths = 0;
     numEnemiesKilled = 0;
+    runTime_s = 0;
+    runTime_m = 0;
 
-    // start_game();
     MainMenu* main_menu = curr_scene->get_node<MainMenu>("MainMenu");
     main_menu->show();
 }
@@ -236,4 +266,37 @@ void Main::enemy_killed(){
     numEnemiesKilled++;
     UtilityFunctions::print(String("Current Enemies killed: ") + String::num(numEnemiesKilled));
     get_node<AudioStreamPlayer>("Enemy Hit")->play();
+}
+
+void Main::game_timer(){
+    runTime_s+=.1;
+
+    // Rollover minutes
+    if (runTime_s > 59){
+        runTime_m++;
+        runTime_s = 0;
+    }
+    String curTime = getTimeString();
+    UtilityFunctions::print(String("Time: ") + curTime);
+
+    Node* level_1_scene = get_node_or_null(NodePath(level_1_node_name));
+    if (level_1_scene == nullptr){
+        return;
+    }
+    set_hud_timer(curTime);
+}
+
+String Main::getTimeString(){
+    return String::num(runTime_m).pad_zeros(2) +
+           String(":") + String::num_real(runTime_s, 1).pad_zeros(2).pad_decimals(1);
+}
+
+void Main::set_hud_timer(String time){
+    Node* level_1_scene = get_node_or_null(NodePath(level_1_node_name));
+    Player * player = level_1_scene->get_node<Player>("Player");
+
+	Camera2D* cam = player->get_node<Camera2D>("PlayerCam");
+	CanvasLayer* hud = cam->get_node<CanvasLayer>("HUD");
+	Label* timer = hud->get_node<Label>("Timer");
+	timer->set_text(time);
 }

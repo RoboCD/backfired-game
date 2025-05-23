@@ -1,4 +1,6 @@
 #include "Player.h"
+#include "Bullet.h"
+
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/engine.hpp>
@@ -9,8 +11,6 @@
 #include <godot_cpp/classes/marker2d.hpp>
 #include <godot_cpp/classes/audio_stream_player.hpp>
 #include <godot_cpp/classes/viewport.hpp>
-
-#include "Bullet.h"
 
 using namespace godot;
 
@@ -222,3 +222,4 @@ void Player::pause_all_animations(bool p_pause){
         }
      }
 }
+

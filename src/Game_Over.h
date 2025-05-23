@@ -22,8 +22,6 @@ public:
 
     void set_message(String p_message);
 
-    void set_deaths(int deaths);
-
 protected:
 	static void _bind_methods();
 

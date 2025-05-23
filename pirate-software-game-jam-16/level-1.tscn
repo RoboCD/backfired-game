@@ -47,11 +47,38 @@ use_kinematic_bodies = true
 [node name="Player" parent="." instance=ExtResource("1_i2b0v")]
 position = Vector2(395, 448)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="PlayerCam" type="Camera2D" parent="Player"]
 zoom = Vector2(1.5, 1.5)
 limit_left = 0
 limit_top = -128
 limit_bottom = 648
+
+[node name="HUD" type="CanvasLayer" parent="Player/PlayerCam"]
+layer = 5
+
+[node name="Timer" type="Label" parent="Player/PlayerCam/HUD"]
+top_level = true
+texture_filter = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -119.0
+offset_top = -12.0
+offset_bottom = 57.0
+grow_horizontal = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 50
+text = "Time"
+horizontal_alignment = 2
+
+[node name="ColorRect" type="ColorRect" parent="Player/PlayerCam/HUD/Timer"]
+show_behind_parent = true
+layout_mode = 0
+offset_left = -4.0
+offset_right = 171.0
+offset_bottom = 61.0
+color = Color(0.282353, 0.282353, 0.282353, 1)
 
 [node name="BackgroundLayer" type="CanvasLayer" parent="."]
 layer = -1
@@ -191,3 +218,7 @@ velocity = Vector2(0, 2.81165e+07)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exit"]
 position = Vector2(7483.5, 96)
 shape = SubResource("RectangleShape2D_r4lar")
+
+[node name="RunTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true

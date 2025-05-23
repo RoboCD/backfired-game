@@ -51,10 +51,3 @@ void GameOver::set_message(String p_message){
     message = p_message;
     get_node<Label>("Message")->set_text(message);
 }
-
-void GameOver::set_deaths(int deaths){
-
-    Label* death_label = get_node<Label>("Deaths");
-    death_label->set_text(String("Deaths: " +String::num(deaths)));
-    death_label->show();
-}
