@@ -11,7 +11,6 @@
 #include <godot_cpp/classes/marker2d.hpp>
 #include <godot_cpp/classes/audio_stream_player.hpp>
 #include <godot_cpp/classes/viewport.hpp>
-#include <godot_cpp/classes/canvas_layer.hpp>
 
 using namespace godot;
 
@@ -54,8 +53,6 @@ Player::Player() {
 	playerSprite2d->set_texture(texture);
 
 	bulletScene = ResourceLoader::get_singleton()->load("res://bullet.tscn");
-
-
 }
 
 Player::~Player() {
@@ -65,9 +62,6 @@ Player::~Player() {
 void Player::_ready(){
 	show();
 	dead = false;
-	// Camera2D* cam = get_node<Camera2D>("PlayerCam");
-	// CanvasLayer* hud = cam->get_node<CanvasLayer>("HUD");
-	// timer = hud->get_node<Label>("Timer");
 }
 
 void Player::set_speed(float p_speed) {
