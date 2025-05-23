@@ -10,6 +10,7 @@
 #include <godot_cpp/classes/sprite2d.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
 #include <godot_cpp/classes/timer.hpp>
+#include <godot_cpp/classes/label.hpp>
 
 #include <gdextension_interface.h>
 #include <godot_cpp/classes/resource.hpp>
