@@ -33,6 +33,8 @@ public:
     void enemy_killed();
 
     void game_timer();
+
+    void set_hud_timer(String time);
 protected:
 	static void _bind_methods();
 

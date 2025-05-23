@@ -43,7 +43,6 @@ public:
 
 	void pause_all_animations(bool p_pause);
 
-	void set_hud_timer(String time);
 protected:
 	static void _bind_methods();
 

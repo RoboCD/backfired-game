@@ -12,7 +12,6 @@
 #include <godot_cpp/classes/audio_stream_player.hpp>
 #include <godot_cpp/classes/viewport.hpp>
 #include <godot_cpp/classes/canvas_layer.hpp>
-#include <godot_cpp/classes/camera2d.hpp>
 
 using namespace godot;
 
@@ -66,9 +65,9 @@ Player::~Player() {
 void Player::_ready(){
 	show();
 	dead = false;
-	Camera2D* cam = get_node<Camera2D>("PlayerCam");
-	CanvasLayer* hud = cam->get_node<CanvasLayer>("HUD");
-	timer = hud->get_node<Label>("Timer");
+	// Camera2D* cam = get_node<Camera2D>("PlayerCam");
+	// CanvasLayer* hud = cam->get_node<CanvasLayer>("HUD");
+	// timer = hud->get_node<Label>("Timer");
 }
 
 void Player::set_speed(float p_speed) {
@@ -230,10 +229,3 @@ void Player::pause_all_animations(bool p_pause){
      }
 }
 
-void Player::set_hud_timer(String time){
-
-	// Camera2D* cam = get_node<Camera2D>("PlayerCam");
-	// CanvasLayer* hud = cam->get_node<CanvasLayer>("HUD");
-	// Label* timer = hud->get_node<Label>("Timer");
-	timer->set_text(time);
-}

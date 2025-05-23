@@ -17,6 +17,7 @@
 #include <godot_cpp/classes/scene_tree.hpp>
 #include <godot_cpp/classes/area2d.hpp>
 #include <godot_cpp/classes/audio_stream_player.hpp>
+#include <godot_cpp/classes/camera2d.hpp>
 
 using namespace godot;
 
@@ -282,11 +283,20 @@ void Main::game_timer(){
     if (level_1_scene == nullptr){
         return;
     }
-    Player * player = level_1_scene->get_node<Player>("Player");
-    player->set_hud_timer(curTime);
+    set_hud_timer(curTime);
 }
 
 String Main::getTimeString(){
     return String::num(runTime_m).pad_zeros(2) +
            String(":") + String::num_real(runTime_s, 1).pad_zeros(2).pad_decimals(1);
+}
+
+void Main::set_hud_timer(String time){
+    Node* level_1_scene = get_node_or_null(NodePath(level_1_node_name));
+    Player * player = level_1_scene->get_node<Player>("Player");
+
+	Camera2D* cam = player->get_node<Camera2D>("PlayerCam");
+	CanvasLayer* hud = cam->get_node<CanvasLayer>("HUD");
+	Label* timer = hud->get_node<Label>("Timer");
+	timer->set_text(time);
 }
