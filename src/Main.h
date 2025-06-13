@@ -18,6 +18,8 @@ public:
 
     void _ready() override;
 
+    void on_node_added(Node* node);
+
 	void _process(double delta) override;
 
     void start_game();
@@ -38,8 +40,12 @@ public:
 protected:
 	static void _bind_methods();
 
+
 private:
     String getTimeString();
+
+    void level_1_ready(Node* p_node);
+
     bool start_signals_connected{false};
     bool game_over_signal_connect{false};
     bool win_screen_signal_connect{false};
