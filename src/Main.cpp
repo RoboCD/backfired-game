@@ -30,7 +30,6 @@ void Main::_bind_methods() {
     ClassDB::bind_method(D_METHOD("main_menu"), &Main::main_menu);
     ClassDB::bind_method(D_METHOD("enemy_killed"), &Main::enemy_killed);
     ClassDB::bind_method(D_METHOD("game_timer"), &Main::game_timer);
-    ClassDB::bind_method(D_METHOD("on_node_added"), &Main::on_node_added);
     ClassDB::bind_method(D_METHOD("level_1_ready"), &Main::level_1_ready);
 
 }
@@ -66,81 +65,19 @@ void Main::_ready(){
        UtilityFunctions::print(String("Failed to connect signal: ") + error);
     }
     UtilityFunctions::print("Main node started");
-
-    // Connect to the node_added signal
-    // get_tree()->connect("node_added", Callable(this, "on_node_added"));
-}
-
-void Main::on_node_added(Node* node){
-    // UtilityFunctions::print("node added");
-    if (node->get_name() == level_1_node_name){
-        // Now that the level is added, connect its signals
-        // level_1_ready(node);
-        // Optionally disconnect the signal if you only need to do this once
-        get_tree()->disconnect("node_added", Callable(this, "on_node_added"));
-    }
 }
 
 void Main::_process(double delta) {
     SceneTree* scene_tree = get_tree();
 
     Node * curr_scene = scene_tree->get_current_scene();
-    // UtilityFunctions::print(String("Curr Scene: ") + curr_scene->get_name());
 
     Node* level_1_scene = get_node_or_null(NodePath(level_1_node_name));
 
     if (level_1_scene == nullptr){
         return;
     }
-    // Player * player = level_1_scene->get_node<Player>("Player");
-    // Node * player_node = level_1_scene->get_node_or_null(NodePath(level_1_node_name + "/Player"));
-    // if (player_node == nullptr){
-    //     return;
-    // }
-    // Player *player = Object::cast_to<Player>(player_node);
-    // if (start_signals_connected == false)
-    // {
-    //     UtilityFunctions::print("start signals connect");
 
-    //     Error error = player->connect("player_died", Callable(this, "game_over"));
-    //     UtilityFunctions::print("main player signal connect");
-    //     if (error != OK) {
-    //         UtilityFunctions::print(String("Failed to connect signal: ") + error);
-    //     }
-    //     else{
-    //         start_signals_connected = true;
-    //     }
-    //     Area2D * exit_area = level_1_scene->get_node<Area2D>("Exit");
-    //     Error error_exit = exit_area->connect("body_entered", Callable(this, "game_won"));
-    //     UtilityFunctions::print("game won node signal connect");
-    //     if (error_exit != OK) {
-    //         UtilityFunctions::print(String("Failed to connect exit area signal: ") + error_exit);
-    //     }
-    //     else{
-    //         start_signals_connected = true;
-    //     }
-    //     // Enemies death signal
-    //     TypedArray<Node> enemies = level_1_scene->get_children();
-    //     for (int i = 0; i < enemies.size(); i++){
-    //         Node* enemy = Object::cast_to<Node>(enemies[i]);
-    //         if (enemy && enemy->has_signal("enemy_hit")){
-    //             UtilityFunctions::print(String("Enemy hit signal connect: ") + String::num(i));
-    //             enemy->connect("enemy_hit", Callable(this, "enemy_killed"));
-    //         }
-    //     }
-
-    //     // Timer signal connect
-    //     Timer* timer = level_1_scene->get_node<Timer>("RunTimer");
-    //     Error error_timer = timer->connect("timeout", Callable(this, "game_timer"));
-    //     UtilityFunctions::print("game timer node signal connect");
-    //     if (error_timer != OK) {
-    //         UtilityFunctions::print(String("Failed to connect game timer signal: ") + error_timer);
-    //     }
-    //     else{
-    //         start_signals_connected = true;
-    //     }
-    // }
-    // UtilityFunctions::print("game over node signal connect");
     if (curr_scene->has_node("GameOver") && game_over_signal_connect == false){
 
         GameOver * game_over_node = curr_scene->get_node<GameOver>("GameOver");
@@ -189,17 +126,13 @@ void Main::start_game(){
     level_1_node_name = "Level-1_"+String::num(numGames)+"_"+String::num(numDeaths);
     level_1_node->set_name(level_1_node_name);
 
-    // Gemini
     Error error_lvl =level_1_node->connect("ready", Callable(this, "level_1_ready"));
     UtilityFunctions::print("Connect level ready signal");
     if (error_lvl != OK) {
         UtilityFunctions::print(String("Failed to connect signal: ") + error_lvl);
     }
     curr_scene->add_child(level_1_node);
-    // curr_scene->call_deferred("add_child", level_1_node);
 
-    // Gpt
-    // call_deferred("level_1_ready", level_1_node);
     MainMenu* main_menu = curr_scene->get_node<MainMenu>("MainMenu");
     main_menu->hide();
 }
@@ -232,7 +165,6 @@ void Main::restart_game(){
     SceneTree* scene_tree = get_tree();
     Node * curr_scene = scene_tree->get_current_scene();
 
-    // CanvasLayer* level_1_node = curr_scene->get_node<CanvasLayer>(level_1_node_name);
     level_1_node->queue_free();
     curr_scene->get_node<GameOver>("GameOver")->queue_free();
     start_signals_connected = false;
@@ -263,7 +195,6 @@ void Main::game_won(Node* p_node){
     win_screen_node->show();
 
     // Pause Timer
-    // CanvasLayer* level_1_node = scene_tree->get_current_scene()->get_node<CanvasLayer>(level_1_node_name);
     Timer * runTimer = level_1_node->get_node<Timer>("RunTimer");
     runTimer->set_paused(true);
 
@@ -281,7 +212,6 @@ void Main::main_menu(){
     SceneTree* scene_tree = get_tree();
     Node * curr_scene = scene_tree->get_current_scene();
 
-    // CanvasLayer* level_1_node = curr_scene->get_node<CanvasLayer>(level_1_node_name);
     level_1_node->queue_free();
     TypedArray<Node> children = curr_scene->get_children();
     for (int i = 0; i< children.size(); i++){
