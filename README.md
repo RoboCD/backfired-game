@@ -24,5 +24,6 @@ All art assets were made using [Aseprite](https://www.aseprite.org/) pixel art e
 
 ## Versions
 
+- 1.1.0 - Added timer, win screen to show score and way to restart game
 - 1.0.1 - Fix early "You Escaped" Bug and cleanup
 - 1.0.0 - Game Jam Submission
