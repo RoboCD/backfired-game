@@ -44,7 +44,8 @@ protected:
 private:
     String getTimeString();
 
-    void level_1_ready(Node* p_node);
+    // void level_1_ready(Node* p_node);
+    void level_1_ready();
 
     bool start_signals_connected{false};
     bool game_over_signal_connect{false};
@@ -57,7 +58,7 @@ private:
     int runTime_m;
 
     String level_1_node_name;
-
+    CanvasLayer* level_1_node;
     Ref<PackedScene> game_over_screen;
     Ref<PackedScene> win_screen;
 };
