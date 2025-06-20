@@ -40,9 +40,11 @@ protected:
 
 private:
     String getTimeString();
-    bool start_signals_connected{false};
-    bool game_over_signal_connect{false};
-    bool win_screen_signal_connect{false};
+
+    void level_1_ready();
+
+    bool game_over_signal_connect;
+    bool win_screen_signal_connect;
 
     int numDeaths;
     int numGames;
@@ -51,7 +53,7 @@ private:
     int runTime_m;
 
     String level_1_node_name;
-
+    CanvasLayer* level_1_node;
     Ref<PackedScene> game_over_screen;
     Ref<PackedScene> win_screen;
 };
