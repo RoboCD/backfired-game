@@ -35,6 +35,8 @@ void Main::_bind_methods() {
 }
 
 Main::Main():
+    game_over_signal_connect(false),
+    win_screen_signal_connect(false),
     numDeaths(0),
     numGames(0),
     numEnemiesKilled(0),
@@ -167,7 +169,7 @@ void Main::restart_game(){
 
     level_1_node->queue_free();
     curr_scene->get_node<GameOver>("GameOver")->queue_free();
-    start_signals_connected = false;
+    win_screen_signal_connect = false;
     game_over_signal_connect = false;
     numDeaths++;
     numEnemiesKilled = 0;
@@ -222,7 +224,6 @@ void Main::main_menu(){
 
     }
     // Reset signals and numbers tracked
-    start_signals_connected = false;
     game_over_signal_connect = false;
     win_screen_signal_connect = false;
 
@@ -287,18 +288,14 @@ void Main::level_1_ready(){
     if (error != OK) {
         UtilityFunctions::print(String("Failed to connect signal: ") + error);
     }
-    else{
-        start_signals_connected = true;
-    }
+
     Area2D * exit_area = level_1_node->get_node<Area2D>("Exit");
     Error error_exit = exit_area->connect("body_entered", Callable(this, "game_won"));
     UtilityFunctions::print("game won node signal connect");
     if (error_exit != OK) {
         UtilityFunctions::print(String("Failed to connect exit area signal: ") + error_exit);
     }
-    else{
-        start_signals_connected = true;
-    }
+
     // Enemies death signal
     TypedArray<Node> enemies = level_1_node->get_children();
     for (int i = 0; i < enemies.size(); i++){
@@ -315,8 +312,5 @@ void Main::level_1_ready(){
     UtilityFunctions::print("game timer node signal connect");
     if (error_timer != OK) {
         UtilityFunctions::print(String("Failed to connect game timer signal: ") + error_timer);
-    }
-    else{
-        start_signals_connected = true;
     }
 }

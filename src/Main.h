@@ -43,9 +43,8 @@ private:
 
     void level_1_ready();
 
-    bool start_signals_connected{false};
-    bool game_over_signal_connect{false};
-    bool win_screen_signal_connect{false};
+    bool game_over_signal_connect;
+    bool win_screen_signal_connect;
 
     int numDeaths;
     int numGames;
